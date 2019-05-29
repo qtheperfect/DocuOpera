@@ -1,0 +1,102 @@
+
+* {box-sizing: border-box;}
+
+.img-zoom-container {
+    position: absolute;
+    width:300px;
+    top:0px;
+    bottom:0px;
+    z-index:5;
+}
+
+#verbose{
+    position:absolute;
+    bottom:0px;
+    left:4px;
+    width:100%;
+    vertical-align:bottom;
+    background-color:rgba(255,111,88,0.5);
+    color:rgba(0,20,20,1);
+    font-size:20px;
+}
+
+.img-org {
+    position:absolute;
+    width:100%;
+    border:0px;
+    object-fit:contain;
+}
+.img-zoom-lens {
+    position: absolute;
+    border: 2px solid red;
+    /*set the size of the lens:*/
+    z-index:11;
+}
+
+.page-bar {
+    position:absolute;
+    border: 3px solid rgba(200, 77, 44, 1);
+    z-index:10;
+    right:0px;
+    bottom:0px;
+}
+
+.last-lens {
+    position:absolute;
+    overflow:hidden;
+    border: 4px dashed rgba(200, 0, 0, 0.4);
+    //    backgroundColor: rgba(0.4,0.3,0.0.6);
+    //    box-shadow: inset 5px 5px  #888888;
+    outline: 1px solid rgba(200, 0,0, 0.9);
+    z-index:10;
+}
+
+.history-lens {
+    position:absolute;
+    overflow:hidden;
+    border: 3px dotted rgba(100,100,180,0.2);
+    //    backgroundColor: rgba(0.4,0.3,0.0.4);
+    outline: 1px solid rgba(100, 100, 180, 0.6);
+    z-index:10;
+}
+
+
+.img-zoom-result {
+    border: 1px solid #d4d4d4;
+    position: absolute;
+    /*set the size of the result div:*/
+    left: 0px;
+    min-width:100%;
+    //    height: 400px;
+    top:2px;
+    bottom:0px;
+}
+
+.res-container {
+    border: 1px solid #d4d4d4;
+    position: absolute;
+    /*set the size of the result div:*/
+    left: 300px;
+    right:0px;
+    //    height: 400px;
+    top:0px;
+    bottom:0px;
+    overflow:hidden;
+}
+
+.allcontainer {
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    bottom:10px;
+}
+
+.notify {
+    position:absolute;
+    z-index:100;
+    bottom:0px;
+    right:0px;
+    min-height:50px;
+    min-width:100px;
+}
+    

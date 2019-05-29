@@ -1,0 +1,48 @@
+#+TITLE: How To Use:
+
+* open the html file in the browser.
+- Move pdf documents into ./sources/doc/;
+- run `sh RUNME.sh`;
+- Require: python3; 
+
+* Adjust your scope using keyboard:
+- Press Z / X to zoom-in / zoom-out the scope;
+- Press E, D, S, F, to move the scope.;
+- Press W, R to turn pages;
+- Press B to alter the fast/slow moving of lens;
+- Press A to apply the last command for extra 5 times; 
+- *NEW* Press 1, 2 to take 10-page jumps.
+- Press K to quick jump pages;
+- Press H to hide / temporally display preview frame, and -
+- Press ] to retrieve the hidden preview frame.
+
+* Open a pdf file instead of default image documents ( low performance)...
+- Press O and input an arbitrary document path, or -
+- Press L and select from the file-list.
+
+* Set the automatic view sequence in a page:
+- Press P to start/stop preparing the automatic sequence;
+- Press 4 to add the current lens to the sequence;
+
+** After the lens sequence is prepared :
+- Press SPACE to move forward ( in the lens sequence );
+- Press V to move backward ( in the lens sequence );
+- Press G to go to the first/last lens position;
+- Press Q to remove the history window mark
+/By default, the history window position will appear in the main window as dashed boxes, which prompts convenience in fast scanning./
+- Press *5* to start/stop the automatic jumping mode.
+
+* Load your own documents and other limitations:
+- The page list (picArray) is stored in the file "piclist.js", pdf list (pdfArray) in "pdflist.js".
+- Run the python script lspng.py or lspdf.py to generate the piclist.js automatically.
+/(`python lspng.py $PATH_OF_IMAGE_FOLDER` generates "piclist.js" )/
+
+* Version 1.1 Note:
+- *PDF Supported* 
+- Animated timing bar.
+ 
+* TODO Problems:
+- Text searching
+- Taking notes
+
+

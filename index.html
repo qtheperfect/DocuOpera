@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<script>
+
+	  var srcFile = new XMLHttpRequest();
+	  srcFile.open("GET", "src/docuTV.html", false);
+	  srcFile.onreadystatechange = function ()	  {
+	  if(srcFile.readyState === 4)	  {
+	  if(srcFile.status === 200 || srcFile.status == 0)	  {
+	  document.write( srcFile.responseText );
+
+	  }
+	  }
+	  }
+	  srcFile.send();
+
+	</script>
+    </head>
+    <body>
+
+
+    </body>
+</html>
