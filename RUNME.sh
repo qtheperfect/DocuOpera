@@ -1,8 +1,8 @@
 #: /usr/bin
 
 serverPort="13531"
-imagedir="./project/resources/imgdoc/"
-bookdir="./project/resources/doc/"
+imagedir="./resources/imgdoc/"
+bookdir="./resources/doc/"
 
 echo "Have you placed all files into $(realpath $bookdir) properly?"
 cd tools;
