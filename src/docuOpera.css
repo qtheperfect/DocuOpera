@@ -44,7 +44,11 @@
 .last-lens {
     position:absolute;
     overflow:hidden;
-    border: 4px dashed rgba(200, 0, 0, 0.4);
+    border-left: 5px dashed rgba(200, 0, 0, 0.7);
+    border-right: 5px dashed rgba(200, 0, 0, 0.7);
+    border-top: 2px dashed rgba(200, 100, 0, 0.4);
+    border-bottom: 2px dashed rgba(200, 100, 0, 0.4);
+    
     //    backgroundColor: rgba(0.4,0.3,0.0.6);
     //    box-shadow: inset 5px 5px  #888888;
     outline: 1px solid rgba(200, 0,0, 0.9);
@@ -54,7 +58,10 @@
 .history-lens {
     position:absolute;
     overflow:hidden;
-    border: 3px dotted rgba(100,100,180,0.2);
+    border-left: 3px dotted rgba(100,100,180,0.4);
+    border-right: 3px dotted rgba(100,100,180,0.4);
+    border-top: 2px dotted rgba(100,100,180,0.2);
+    border-bottom: 2px dotted rgba(100,100,180,0.2);
     //    backgroundColor: rgba(0.4,0.3,0.0.4);
     outline: 1px solid rgba(100, 100, 180, 0.6);
     z-index:10;

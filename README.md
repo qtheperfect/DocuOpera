@@ -1,18 +1,18 @@
-# docuTV - Makes your reading nights with the screen no longer suck.
+# DocuOpera - The On-Screen Reading For Documents Deserves To Be More Convenient!
 
-The on-screen document reading deserves to be more convenient!
+A better document viewing software.
 
 When reading documents:
 
-* Jumping around among a series of fractions in a page should be automatic, and -
+* Inside the browser, with only aid of keyboard, no mouses or touching devices needed.
 
-* The screen space should be made full use of, 
+* Jumping around among a series of sections in a page with merely one key, and -
 
-* Just inside the browser, with only keyboard, no mouses or touching devices needed.
+* The screen space is made full use of without one centimeter waste, 
 
 Usage:
 
-* Open docuTV.html inside browser and learn how to use, or
+* Open index.html inside browser and learn how to use, or
 
 * View How-To-Use.org for the Detail.
 
