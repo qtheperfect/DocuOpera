@@ -5,32 +5,31 @@
 - run `sh RUNME.sh`;
 - Require: python3; 
 
-* Adjust your scope using keyboard:
-- Press Z / X to zoom-in / zoom-out the scope;
-- Press E, D, S, F, to move the scope.;
+* Adjust the scope position:
+- Press Z / X to zoom-in/out the lens;
+- Press E, D, S, F, to move the lens up, down, left, right.;
 - Press W, R to turn pages;
-- Press B to alter the fast/slow moving of lens;
-- Press A to apply the last command for extra 5 times; 
+- Press B to alter the mode of fast/slow moving for lens;
+- Press A to repeat the last command for extra 5 times; 
 - *NEW* Press 1, 2 to take 10-page jumps.
-- Press K to quick jump pages;
+- Press K to quickly jump to pages;
 - Press H to hide / temporally display preview frame, and -
 - Press ] to retrieve the hidden preview frame.
 
 * Open a pdf file instead of default image documents ( low performance)...
-- Press O and input an arbitrary document path, or -
-- Press L and select from the file-list.
+- Press L and select a pdf from the file-list, or -
+- Press O and input an arbitrary document path (the hard way).
 
-* Set the automatic view sequence in a page:
-- Press P to start/stop preparing the automatic sequence;
-- Press 4 to add the current lens to the sequence;
+* Set the automatic view sequence in a page *VERY USEFUL*:
+- Press P to turn on/off setting the automatic jump sequence, and when it's on - 
+- Press T to add the current lens position to the sequence;
 
-** After the lens sequence is prepared :
-- Press SPACE to move forward ( in the lens sequence );
-- Press V to move backward ( in the lens sequence );
+** AFTER the lens sequence is prepared :
+- Press SPACE/V to move forward/backward;
 - Press G to go to the first/last lens position;
 - Press Q to remove the history window mark
-/By default, the history window position will appear in the main window as dashed boxes, which prompts convenience in fast scanning./
-- Press *5* to start/stop the automatic jumping mode.
+   /By default, the history window positions will be marked in the main window as dashed boxes, which facilitates fast scanning./
+- Press 4 to start/stop the automatic forwarding mode.
 
 * Load your own documents and other limitations:
 - The page list (picArray) is stored in the file "piclist.js", pdf list (pdfArray) in "pdflist.js".
@@ -41,8 +40,9 @@
 - *PDF Supported* 
 - Animated timing bar.
  
-* TODO Problems:
+* TODO List:
 - Text searching
 - Taking notes
+- PDF performance issues
 
 

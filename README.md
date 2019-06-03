@@ -1,14 +1,14 @@
-# DocuOpera - The On-Screen Reading For Documents Deserves To Be More Convenient!
+# DocuOpera - A Minimalist Shortkey-Oriented Document Viewer
 
-A better document viewing software.
+The On-Screen Reading For Documents Deserves To Be More Convenient!
 
 When reading documents:
 
-* Inside the browser, with only aid of keyboard, no mouses or touching devices needed.
+* Inside the browser, with only aid of keyboard, no mouses or touching devices required;
 
-* Jumping around among a series of sections in a page with merely one key, and -
+* Jump around among a series of sections in a page with merely one key, and -
 
-* The screen space is made full use of without one centimeter waste, 
+* Make full use of the screen space  without one centimeter waste.
 
 Usage:
 
