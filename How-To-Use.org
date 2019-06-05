@@ -31,10 +31,11 @@
    /By default, the history window positions will be marked in the main window as dashed boxes, which facilitates fast scanning./
 - Press 4 to start/stop the automatic forwarding mode.
 
-* Load your own documents and other limitations:
-- The page list (picArray) is stored in the file "piclist.js", pdf list (pdfArray) in "pdflist.js".
-- Run the python script lspng.py or lspdf.py to generate the piclist.js automatically.
-/(`python lspng.py $PATH_OF_IMAGE_FOLDER` generates "piclist.js" )/
+* Load your own documents:
+- /resources/doc for pdf files and /resources/imgdoc for image files, and then -
+- /tools/lsimg.py generates "/src/piclist.js";
+- /tools/lspdf.py generates "/src/pdflist.js";
+- /RUNME.sh gererates both.
 
 * Version 1.1 Note:
 - *PDF Supported* 
@@ -45,4 +46,10 @@
 - Taking notes
 - PDF performance issues
 
+* About:
+** Source Code:
+[https://github.com/fulgenssequar/docuOpera/]
+** LICENSE:
+Apache License 2.0
+[http://www.apache.org/licenses/LICENSE-2.0]
 

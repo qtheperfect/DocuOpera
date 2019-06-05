@@ -116,10 +116,10 @@
 	 }
 
 	 function imageZoom(imgID, resultID) {
-	     var img, lens, result, cx, cy;
+	     var img, lens, result;
 	     var howLarge=5;
 	     img = document.getElementById(imgID);
-	     img.addEventListener("load", function(){resetScale(howLarge)});
+
 	     result = document.getElementById(resultID);
 	     verbose = document.getElementById("verbose");
 
@@ -185,13 +185,31 @@
 	     
 	     putLens();
 	     
-	     resetScale(howLarge);
-
+	     img.addEventListener("load", function(){resetScale(howLarge); blinkLens();});
 	     
 	     lens.addEventListener("mousemove", moveLens);
 	     img.addEventListener("mousemove", moveLens);
 
-	     window.addEventListener("mousedown", followBetterForward);
+
+
+
+	     function mouseVari(e){
+		 e.preventDefault();
+		 if (e.button==0){
+		     followBetterForward();
+		 }
+		 else{
+		   
+		     followBetterBackward();
+		 }
+		 return false;
+	     }
+	     result.addEventListener("mousedown", mouseVari);
+	     //	     result.contextmenu(function(){return false;});
+	     // NOTE: WTF
+
+	     // window.addEventListener("mousedown", followBetterForward);
+	     
 	     window.addEventListener("keydown", translateKey);
 	     /*and also for touch screens:*/
 	     lens.addEventListener("touchmove", moveLens);
