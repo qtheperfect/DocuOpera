@@ -47,7 +47,7 @@
 - PDF performance issues
 
 * About:
-** Source Code:
+** Page:
 [https://github.com/fulgenssequar/docuOpera/]
 ** LICENSE:
 Apache License 2.0
