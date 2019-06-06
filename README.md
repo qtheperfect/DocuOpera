@@ -14,12 +14,12 @@ When reading documents:
 
 Usage:
 
-* Open index.html inside browser and learn how to use, or
+* Open index.html inside browser and learn how to use, or -
 
 * View How-To-Use.org for the Detail.
 
 About:
 
-* Project page: `https://github.com/fulgenssequar/docuOpera/`
-* Mail: `guol2013@hotmail.com`
-* License: Apache License 2.0 `http://www.apache.org/licenses/LICENSE-2.0`
+* [Project page](https://github.com/fulgenssequar/docuOpera/)
+* [Mail](guolh2013@hotmail.com)
+* License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)

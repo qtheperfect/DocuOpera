@@ -48,8 +48,7 @@
 
 * About:
 ** Page:
-[https://github.com/fulgenssequar/docuOpera/]
+[[https://github.com/fulgenssequar/docuOpera/]]
 ** LICENSE:
-Apache License 2.0
-[http://www.apache.org/licenses/LICENSE-2.0]
+[[http://www.apache.org/licenses/LICENSE-2.0][Apache License 2.0]]
 
