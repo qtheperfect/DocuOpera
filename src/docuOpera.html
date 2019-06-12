@@ -2,9 +2,11 @@
 <html>
     <head>
 	<meta charset="utf-8"/>
-	<title> DocuOpera - The On-Screen Reading Of Documents Deserves To Be More Convenient  </title>
+	<title id="title"> DocuOpera - The On-Screen Reading Of Documents Deserves To Be More Convenient  </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="project/src/docuOpera.css" type="text/css"/>
+	<script src="project/src/plany.js"></script>
+	<script src="project/src/audiolist.js"></script>
 	<script src="project/src/piclist.js"></script>
 	<script src="project/src/pdflist.js"></script>
 	<script src="project/lib/pdfjs-2.0.943-dist/build/pdf.js"></script>
@@ -13,6 +15,8 @@
 	 var bLen = picArray.length;
 	 var bP = -1;
 	 picCanvases = new Array( );
+	 
+	 plany = new Playab(audioArray[0]);
 	 
 	 function pageForward(imgID, pace = 1){
 	     bP = (bP + pace)%bLen;
@@ -210,7 +214,7 @@
 
 	     // window.addEventListener("mousedown", followBetterForward);
 	     
-	     window.addEventListener("keydown", translateKey);
+	     document.body.addEventListener("keydown", translateKey);
 	     /*and also for touch screens:*/
 	     lens.addEventListener("touchmove", moveLens);
 	     img.addEventListener("touchmove", moveLens);
@@ -346,9 +350,32 @@
 		     pdfSheet = pdfSheet + i + " - " + pdfList[i] + "\n- ";
 		 }
 		 var n  = prompt(pdfSheet + "Input a num:", 0);
-		 
+		 var newTitle = pdfList[n].match(/[^\/]*$/)
+		 document.getElementById("title").innerHTML = "DocuTV - "+newTitle;
 		 getPDF(pdfList[n]); bP=-1;
 		 nextPage();
+	     }
+	     
+	     keyDict[48] = function(){
+		 audioSheet = "- "
+		 for (i in audioArray){
+		     audioSheet = audioSheet + i + " - " + audioArray[i] + "\n- ";
+		 }
+		 var n  = prompt(audioSheet + "Input a num:", 0);
+		 plany.changeFile(audioArray[n])
+
+	     }
+
+	     keyDict[67]=function(){
+		 if (plany.infoContainer.offsetHeight > 0){
+		     plany.infoContainer.remove();
+		 }
+		 else{
+		     img.parentElement.appendChild(plany.infoContainer);
+		     
+		     plany.btns[0].focus();
+		 }
+		 
 	     }
 
 	     
@@ -842,6 +869,7 @@
 	 img = document.getElementById("myimage")
 	 result = document.getElementById("myresult")
 	 lens = document.getElementsByClassName("img-zoom-lens")[0];
+
 	</script>
 
     </body>

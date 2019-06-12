@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title id="title"> Plany - Play any mp4 in curret path.</title>
+    <script src="plany.js"></script>
+    <script src="audiolist.js"></script>
+  </head>
+  <body>
+    <script>
+      p = new Playab(audioArray[0])
+      document.body.appendChild(p.infoContainer)
+
+      function showKey(e){
+	 console.log(e.keyCode);
+      }
+      window.addEventListener("keydown", function(e){console.log(e.keyCode);p.keyWork(e)})
+    </script>
+    <center><h1>Press A Key</h1></center>
+  </body>
+</html>

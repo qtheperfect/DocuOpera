@@ -11,7 +11,7 @@
 - Press W, R to turn pages;
 - Press B to alter the mode of fast/slow moving for lens;
 - Press A to repeat the last command for extra 5 times; 
-- *NEW* Press 1, 2 to take 10-page jumps.
+- Press 1, 2 to take 10-page jumps.
 - Press K to quickly jump to pages;
 - Press H to hide / temporally display preview frame, and -
 - Press ] to retrieve the hidden preview frame.
@@ -31,16 +31,25 @@
    /By default, the history window positions will be marked in the main window as dashed boxes, which facilitates fast scanning./
 - Press 4 to start/stop the automatic forwarding mode.
 
+* *NEW* Play audios:
+- Press 0 to load audio files;
+- Press C to display/hide the audio panel. And while it's displayed -
+- Audio panels prevents the main shortkeys. Its own short keys are defined in src/plany.js;
+
 * Load your own documents:
 - /resources/doc for pdf files and /resources/imgdoc for image files, and then -
 - /tools/lsimg.py generates "/src/piclist.js";
 - /tools/lspdf.py generates "/src/pdflist.js";
-- /RUNME.sh gererates both.
+- /tools/lsaudio.py generates "/src/audiolist.js";
+- /RUNME.sh gererates all above.
 
 * Version 1.1 Note:
 - *PDF Supported* 
 - Animated timing bar.
- 
+
+* Version 2.0 Note:
+- Opera with audios !!!
+
 * TODO List:
 - Text searching
 - Taking notes
