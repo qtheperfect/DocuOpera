@@ -4,13 +4,15 @@ The On-Screen Reading For Documents Deserves To Be More Convenient!
 
 When reading documents:
 
-* Inside the browser, with only aid of keyboard, no mouses or touching devices required;
+* Jump around sections of a page with merely one key, and -
 
-* Jump around among a series of sections in a page with merely one key, and -
+* With automatically marked history scopes that makes fast scanning never more convenient;
+
+* With an audio player along with the text, repeating and forwarding with shortcuts;
 
 * Make full use of the screen space  without one centimeter waste;
 
-* With automatically marked history scopes for fast scanning.
+* Inside the browser, with only aid of keyboard, no mouses or touching devices required.
 
 Usage:
 
@@ -21,5 +23,5 @@ Usage:
 About:
 
 * [Project page](https://github.com/fulgenssequar/docuOpera/)
-* [Mail](guolh2013@hotmail.com)
-* License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+* [Mail](mail://guolh2013@hotmail.com/)
+* License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)(./LICENSE)

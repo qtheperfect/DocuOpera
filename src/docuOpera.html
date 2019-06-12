@@ -236,7 +236,6 @@
 		 //		 verbose.innerHTML = JSON.stringify(lensPosition);
 		 putLens()
 		 followLens()
-
 	     }
 	     
 	     function getCursorPos(e) {
@@ -351,7 +350,7 @@
 		 }
 		 var n  = prompt(pdfSheet + "Input a num:", 0);
 		 var newTitle = pdfList[n].match(/[^\/]*$/)
-		 document.getElementById("title").innerHTML = "DocuTV - "+newTitle;
+		 document.getElementById("title").innerHTML = "DocuOpera - "+newTitle;
 		 getPDF(pdfList[n]); bP=-1;
 		 nextPage();
 	     }

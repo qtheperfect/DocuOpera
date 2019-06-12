@@ -111,7 +111,7 @@ class Playab{
 	    btns.push(b);
 	}
 
-	makebtn( ()=>0, "" );
+	makebtn( ()=>0, "K" );
 	btns[0].addEventListener("keydown", (e)=>that.keyWork(e));
 	makebtn( ()=>that.startStop(), "pause/resume" );
 	makebtn( ()=>that.playBack(), "playBack" );
