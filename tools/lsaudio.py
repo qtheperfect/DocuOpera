@@ -5,7 +5,7 @@ import re
 allFiles = os.listdir(sys.argv[1])
 allFiles.sort()
 
-allFiles = [ sys.argv[1] + "/" +  a for a in allFiles ]
+allFiles = [ "project/" + sys.argv[1] + "/" +  a for a in allFiles ]
 listStr = "var audioArray = " + str(allFiles) + ";\n"
 
 f = open("src/audiolist.js", "w+")

@@ -11,7 +11,9 @@
 	<script src="project/src/pdflist.js"></script>
 	<script src="project/lib/pdfjs-2.0.943-dist/build/pdf.js"></script>
 	<script>
-	 
+       	 document.oncontextmenu = function (event) {
+             event.preventDefault();
+         };
 	 var bLen = picArray.length;
 	 var bP = -1;
 	 picCanvases = new Array( );

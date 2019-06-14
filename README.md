@@ -2,13 +2,13 @@
 
 The On-Screen Reading For Documents Deserves To Be More Convenient!
 
-When reading documents:
+From now on, when reading documents:
 
-* Jump around sections of a page with merely one key, and -
+* Jump around positions of a page with merely one key;
 
 * With automatically marked history scopes that makes fast scanning never more convenient;
 
-* With an audio player along with the text, repeating and forwarding with shortcuts;
+* With an audio repeater player along with the text, which repeats or forwards fully controlled by shortcuts;
 
 * Make full use of the screen space  without one centimeter waste;
 
@@ -23,5 +23,6 @@ Usage:
 About:
 
 * [Project page](https://github.com/fulgenssequar/docuOpera/)
-* [Mail](mail://guolh2013@hotmail.com/)
-* License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)(./LICENSE)
+* [Mail](mailto:guolh2013@hotmail.com/)
+* License: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+[See](LICENSE)
