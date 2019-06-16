@@ -2,20 +2,55 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title id="title"> Plany - Play any mp4 in curret path.</title>
+    <title id="title"> Plany - Play any media that looks good.</title>
+    <link rel="stylesheet" href="project/src/docuOpera.css" type="text/css"/>
     <script src="plany.js"></script>
-    <script src="audiolist.js"></script>
+    <script src="videolist.js"></script>
   </head>
   <body>
     <script>
-      p = new Playab(audioArray[0])
-      document.body.appendChild(p.infoContainer)
-
+      p = new Playab("");
+      document.body.appendChild(p.infoContainer);
+     
       function showKey(e){
 	 console.log(e.keyCode);
       }
-      window.addEventListener("keydown", function(e){console.log(e.keyCode);p.keyWork(e)})
+      function setStream(e){
+      	  p.player = document.getElementById("jpav");
+	  p.player.src = videoArray[0];
+      }
+     function keyWhole(e){
+	 var keyFun = new Array();
+	 keyFun[67] = () => {if (p.infoContainer.offsetHeight == 0) {document.body.appendChild(p.infoContainer)} else p.infoContainer.remove()};
+	 // 56: 8
+	 keyFun[56] = function(){
+	     masterOrder = prompt(videoArray.join("\n"))
+	     for (x in videoArray){
+		 if (videoArray[x].match(masterOrder)){
+		     p.player.src = videoArray[x];
+		     break;
+		 }
+	     }
+	     document.getElementById("title").innerHTML="Plany:"+p.player.src.match(/[^\/]+$/)
+	 }
+
+	 console.log(e.keyCode)
+	 if (keyFun[e.keyCode ]){
+	     e.preventDefault()
+	     keyFun[e.keyCode]();
+	 }
+	 else
+	     p.keyWork(e);
+	 
+     }
+     window.addEventListener("keydown",  keyWhole)
+     window.addEventListener("load", (e)=>{setStream(e); document.body.appendChild(p.infoContainer);})  ;
     </script>
+
+    <div id="videoContainer" style="width:100%;">
+	<video id="jpav" style="width:100%;">
+	</video>
+    </div>
     <center><h1>Press A Key</h1></center>
   </body>
 </html>

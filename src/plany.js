@@ -133,6 +133,8 @@ class Playab{
 	keyList[71]  = ()=>that.playNext();
 	keyList[65]  = ()=>that.moveLeft();
 	keyList[83]  = ()=>that.moveRight();
+	keyList[49]  = ()=>that.moveLeft(30);
+	keyList[50]  = ()=>that.moveRight(30);
 	keyList[81]  = ()=>that.lefterA();
 	keyList[87]  = ()=>that.righterA();
 	keyList[69]  = ()=>that.lefterB();
@@ -146,8 +148,11 @@ class Playab{
     }
     keyWork(e){
 	e.stopPropagation();
-	this.keyMap[e.keyCode]()
-
+	if (this.keyMap[e.keyCode]){
+	    e.preventDefault();
+	    this.keyMap[e.keyCode]();
+	}
+	
     }
 }
 
