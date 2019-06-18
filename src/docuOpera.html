@@ -51,10 +51,47 @@
 	 var pdfTsk;
 	 //	 pdfTsk = new Array();
 
+
+
+	 
+	 function getPageCache(cacheNum=5){
+	     var pagesClose = new Array(cacheNum);
+	     for (var i=0; i<cacheNum; i++){
+		 var pg = new Object;
+		 pg.p = -1;
+		 pg.c = document.createElement("canvas")
+		 pagesClose[i] = pg;
+	     }
+
+	     var res = new Object;
+	     
+	     res.getACanvas = function(n){
+		 pagesClose.unshift(pagesClose.pop())
+		 pagesClose[0].p = n
+		 return pagesClose[0].c
+	     }
+
+	     
+	     res.getRightCanvas = function(n){
+		 pg = pagesClose.find( (x) => x.p==n )
+		 if (pg){
+		     return pg.c
+		 }
+		 else{
+		     return false
+		 }
+	     }
+
+	     return res
+	 }
+	 pgs = getPageCache();
+	 
 	 function getPDF(pdfUrl = pdfUrl){
 	     picArray = new Array();
 	     pdfTsk = pdfjsLib.getDocument(pdfUrl);
 	     bP = -1;
+	     pdfTsk.promise.then( function( pdf) {bLen = pdf.numPages})
+	     pgs = getPageCache();
 	 }	     
 	 
 	 var fetchPDF = document.createElement('input');
@@ -66,7 +103,25 @@
 	 }
 
 	 var sidePix=300;
-	 function getPageI(i){
+	 function getPageI(i, really=true){
+	     console.log("Requesting " + i + " and " + really)
+	     img = document.getElementById("myimage");
+	     result = document.getElementById("myresult");
+	     var c = pgs.getRightCanvas(i)
+	     if(c){
+		 if(really){
+		     canvas.getContext("2d").drawImage(c, 0, 0)
+		     canvas2.getContext("2d").drawImage(c, 0, 0)
+		     result.appendChild(canvas)
+		     img.parentNode.insertBefore(canvas2, img)
+		     getPageI((i+1)%bLen, false)
+		     getPageI((bLen + i-1)%bLen, false)
+		 }
+		 return false;
+	     }
+
+
+	     
 	     pdfTsk.promise.then( function( pdf) {
 		 //		 picArray = new Array( bLen );
 		 bLen = pdf.numPages;
@@ -74,42 +129,72 @@
 		     console.log("running at page " + i )
 		     var viewport = page.getViewport( 3 );
 
-		     var ctx = canvas.getContext("2d");
-		     canvas.width = viewport.width;
-		     canvas.height = viewport.height;
-		     var renderContext = {canvasContext:ctx, viewport:viewport};
-		     page.render( renderContext );
-		     //  picCanvases[i] = canvas;
-		     
-		     img = document.getElementById("myimage");
-		     canvas.className = img.className;
-		     img.parentNode.insertBefore(canvas, img)
-		     img.src = canvas.toDataURL();
-		     
-		     ctx2 = canvas2.getContext("2d");
+		     if (really){
+
+			 var ctx = canvas.getContext("2d");
+			 canvas.width = viewport.width;
+			 canvas.height = viewport.height;
+			 var renderContext = {canvasContext:ctx, viewport:viewport};
+			 page.render( renderContext );
+			 //  picCanvases[i] = canvas;
+			 
+
+			 canvas.className = img.className;
+			 canvas.id = "cvs"
+
+			 result.appendChild(canvas);
+			 
+			 // img.parentNode.insertBefore(canvas, img)
+			 
+			 var ctx2 = canvas2.getContext("2d");
+			 //		     ctx2.drawImage(canvas, 0, 0);
+			 canvas2.width = viewport.width;
+			 canvas2.height = viewport.height;
+			 var renderContext = {canvasContext:ctx2, viewport:viewport};
+			 page.render( renderContext );
+			 // canvas2.getContext("2d").drawImage(canvas, 0, 0)
+			 
+			 img.src = canvas2.toDataURL()
+
+			 canvas2.className = img.className;
+			 canvas2.id = "cvs2"
+
+			 img.parentNode.insertBefore(canvas2, img)
+		     }
+
+		     var cNew = pgs.getACanvas(i)
+		     var contextNew = cNew.getContext("2d");
 		     //		     ctx2.drawImage(canvas, 0, 0);
-		     canvas2.width = viewport.width;
-		     canvas2.height = viewport.height;
-		     var renderContext = {canvasContext:ctx2, viewport:viewport};
+		     cNew.width = viewport.width;
+		     cNew.height = viewport.height;
+		     var renderContext = {canvasContext:contextNew, viewport:viewport};
 		     page.render( renderContext );
 
-		     canvas2.className = img.className;
-		     result = document.getElementById("myresult");
-		     result.appendChild(canvas2);
+		     if (really){
+			 getPageI((i+1)%bLen, false)
+			 getPageI((i+2)%bLen, false)
+			 getPageI((i-1 + bLen)%bLen, false)
+		     }
+		     // canvas2.getContext("2d").drawImage(canvas, 0, 0)
 		     
-		     if (ctx) {
-			 ctx.clearRect(0, 0, canvas.width, canvas.height);
-			 ctx.beginPath();
-		     }
 
-		     if (ctx2) {
-			 ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-			 ctx2.beginPath();
-		     }
-		 }, function(r){console.log(r)} )
+
+		     
+		     /* 
+			if (ctx) {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.beginPath();
+			}
+
+			if (ctx2) {
+			ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+			ctx2.beginPath();
+			} */
+		 }, function(r){console.log(r)} )//.then(()=>{canvas2.getContext("2d").drawImage(canvas, 0, 0)})
 	     })
 	 }
 
+	 
 	 function getWholePDF(){
 	     // An unpracticable function unless you have 1Tb memory...
 	     pdfTsk.promise.then( function(pdf){
@@ -205,7 +290,7 @@
 		     followBetterForward();
 		 }
 		 else{
-		   
+		     
 		     followBetterBackward();
 		 }
 		 return false;
@@ -319,7 +404,7 @@
 		 if (img.parentElement.style.zIndex != -1){
 		     img.parentElement.style.zIndex = -1;
 		     if (pageBar){pageBar.style.right="100%";}
-		     result.parentElement.style.left = "4px";
+		     result.parentElement.style.left = "3px";
 		     followLens();
 		 }
 		 else {
@@ -467,7 +552,7 @@
 		 followLens()
 	     }
 
-	     	     
+	     
 	     function lefterLens(){
 		 imgRec = img.getBoundingClientRect();
 		 //		 lensRec = lens.getBoundingClientRect();

@@ -17,11 +17,14 @@ class Playab{
 	this.keyMap = this.buildKey()
     }
     changeFile(fileName){
+	var c = this.player.src
+	var ct = this.player.currentTime
 	this.player.src = fileName;
 	this.timeA = 0;
 	this.timeB = this.player.duration;
-	clearTimeout(this.checker);
-	this.checker=-1;
+	console.log("Jumping To Time:"+ct)
+	this.player.currentTime = ct;
+
     }
     
     startPlay(){
@@ -30,7 +33,7 @@ class Playab{
 	    if (that.player.currentTime >= that.timeB){
 		that.player.currentTime = that.timeA;
 	    }
-	    that.info.innerHTML = "A: " + (that.timeA).toFixed(3) + " - B:" + (that.timeB).toFixed(3) + "<br/>C:" + that.player.currentTime;
+	    that.info.innerHTML = "[" + (that.timeA).toFixed(3) + " - " + (that.timeB).toFixed(3) + "] :" + that.player.currentTime.toFixed(3);
 	    // NOTE: num.toFixed(k)
 	}
 	if (this.checker > 0){

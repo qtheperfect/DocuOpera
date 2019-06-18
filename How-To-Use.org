@@ -53,7 +53,7 @@
 * TODO List:
 - Text searching
 - Taking notes
-- PDF performance issues
+- PDF performance issues [DONE !!!]
 
 * About:
 ** Page:

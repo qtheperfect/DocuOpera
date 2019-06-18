@@ -27,7 +27,7 @@
 	     masterOrder = prompt(videoArray.join("\n"))
 	     for (x in videoArray){
 		 if (videoArray[x].match(masterOrder)){
-		     p.player.src = videoArray[x];
+		     p.changeFile( videoArray[x]);
 		     break;
 		 }
 	     }
@@ -47,8 +47,8 @@
      window.addEventListener("load", (e)=>{setStream(e); document.body.appendChild(p.infoContainer);})  ;
     </script>
 
-    <div id="videoContainer" style="width:100%;">
-	<video id="jpav" style="width:100%;">
+    <div id="videoContainer" style="height:97vh;width:99vh;object-fit:contain">
+	<video id="jpav" style="height:100%;" controls="true">
 	</video>
     </div>
     <center><h1>Press A Key</h1></center>
