@@ -16,7 +16,7 @@
          };
 	 var bLen = picArray.length;
 	 var bP = -1;
-	 picCanvases = new Array( );
+	 var bigLeap = 10;
 	 
 	 plany = new Playab(audioArray[0]);
 	 
@@ -45,10 +45,11 @@
 
 	 
 	 var pdfUrl = pdfList[0];
-	 var picCanvases;
-	 var canvas = document.createElement("canvas");
-	 var canvas2 = document.createElement("canvas");
 	 var pdfTsk;
+	 
+	 //	 var canvas = document.createElement("canvas");
+	 //      canvas.className = "img-org"
+
 	 //	 pdfTsk = new Array();
 
 
@@ -84,7 +85,7 @@
 
 	     return res
 	 }
-	 pgs = getPageCache();
+	 var pgs = getPageCache();
 	 
 	 function getPDF(pdfUrl = pdfUrl){
 	     picArray = new Array();
@@ -103,25 +104,31 @@
 	 }
 
 	 var sidePix=300;
-	 function getPageI(i, really=true){
+	 function getPageI(i, really=true, notForce=true){
 	     console.log("Requesting " + i + " and " + really)
 	     img = document.getElementById("myimage");
 	     result = document.getElementById("myresult");
-	     var c = pgs.getRightCanvas(i)
-	     if(c){
+
+	     var cNew = pgs.getRightCanvas(i)
+	     if (cNew && notForce) {
 		 if(really){
-		     canvas.getContext("2d").drawImage(c, 0, 0)
-		     canvas2.getContext("2d").drawImage(c, 0, 0)
-		     result.appendChild(canvas)
-		     img.parentNode.insertBefore(canvas2, img)
+		     /* canvas.width = cNew.width;
+			canvas.height = cNew.height;
+			canvas.getContext("2d").drawImage(cNew, 0, 0)
+			result.appendChild(canvas) */
+		     // img.parentNode.insertBefore(canvas2, img)
+		     while (result.firstChild){
+			 result.firstChild.remove();
+		     }
+		     result.appendChild(cNew)
+		     
+		     img.src = cNew.toDataURL()
 		     getPageI((i+1)%bLen, false)
 		     getPageI((bLen + i-1)%bLen, false)
 		 }
 		 return false;
 	     }
 
-
-	     
 	     pdfTsk.promise.then( function( pdf) {
 		 //		 picArray = new Array( bLen );
 		 bLen = pdf.numPages;
@@ -129,51 +136,47 @@
 		     console.log("running at page " + i )
 		     var viewport = page.getViewport( 3 );
 
-		     if (really){
-
-			 var ctx = canvas.getContext("2d");
-			 canvas.width = viewport.width;
-			 canvas.height = viewport.height;
-			 var renderContext = {canvasContext:ctx, viewport:viewport};
-			 page.render( renderContext );
-			 //  picCanvases[i] = canvas;
-			 
-
-			 canvas.className = img.className;
-			 canvas.id = "cvs"
-
-			 result.appendChild(canvas);
-			 
-			 // img.parentNode.insertBefore(canvas, img)
-			 
-			 var ctx2 = canvas2.getContext("2d");
-			 //		     ctx2.drawImage(canvas, 0, 0);
-			 canvas2.width = viewport.width;
-			 canvas2.height = viewport.height;
-			 var renderContext = {canvasContext:ctx2, viewport:viewport};
-			 page.render( renderContext );
-			 // canvas2.getContext("2d").drawImage(canvas, 0, 0)
-			 
-			 img.src = canvas2.toDataURL()
-
-			 canvas2.className = img.className;
-			 canvas2.id = "cvs2"
-
-			 img.parentNode.insertBefore(canvas2, img)
-		     }
 
 		     var cNew = pgs.getACanvas(i)
+		     cNew.className = img.className;
 		     var contextNew = cNew.getContext("2d");
 		     //		     ctx2.drawImage(canvas, 0, 0);
 		     cNew.width = viewport.width;
 		     cNew.height = viewport.height;
 		     var renderContext = {canvasContext:contextNew, viewport:viewport};
-		     page.render( renderContext );
+		     newRender = page.render( renderContext );
+
+		     if (really){
+			 
+			 // var ctx = canvas.getContext("2d");
+			 //  canvas.width = viewport.width;
+			 // canvas.height = viewport.height;
+			 //result.appendChild(canvas);
+			 
+			 while (result.firstChild){
+			     result.firstChild.remove();
+			 }
+			 result.appendChild(cNew)
+			 
+			 // img.parentNode.insertBefore(canvas, img)
+			 
+			 
+			 //		     ctx2.drawImage(canvas, 0, 0);
+			 
+			 // canvas2.getContext("2d").drawImage(canvas, 0, 0)
+			 var c = cNew
+			 newRender.then(()=>{
+			     img.src = c.toDataURL();
+			 })
+
+
+		     }
 
 		     if (really){
 			 getPageI((i+1)%bLen, false)
-			 getPageI((i+2)%bLen, false)
 			 getPageI((i-1 + bLen)%bLen, false)
+			 getPageI((i + bigLeap ) % bLen, false)
+			 getPageI((i - bigLeap + bigLeap * bLen ) % bLen, false)
 		     }
 		     // canvas2.getContext("2d").drawImage(canvas, 0, 0)
 		     
@@ -415,7 +418,7 @@
 	     bringSideBack = function(){
 		 img.parentElement.style.zIndex = 9;
 		 if (pageBar) {pageBar.style.right="0px";}
-		 result.parentElement.style.left = img.getBoundingClientRect().width + "px";
+		 result.parentElement.style.left = sidePix + "px";
 		 followLens();		     
 	     }
 	     
@@ -424,8 +427,11 @@
 
 	     keyDict[82] = nextPage;
 	     keyDict[87] = prePage;
-	     keyDict[49] = function(){prePage(10)};
-	     keyDict[50] = function(){nextPage(10)};
+	     keyDict[49] = function(){prePage(bigLeap)};
+	     keyDict[50] = function(){nextPage(bigLeap)};
+
+	     // 5
+	     keyDict[53] = ()=>getPageI(bP, true, false)
 
 
 	     
