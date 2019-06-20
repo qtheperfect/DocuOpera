@@ -5,7 +5,7 @@ import re
 allFiles = os.listdir(sys.argv[1])
 allFiles.sort()
 
-allFiles = [ "project/" + sys.argv[1] + "/" +  a for a in allFiles ]
+allFiles = [  sys.argv[1] + "/" +  a for a in allFiles ]
 allFiles = ["project/img_cover.png"] + allFiles
 listStr = "var picArray = " + str(allFiles);
 

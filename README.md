@@ -18,7 +18,7 @@ Usage:
 
 * Open index.html inside browser and learn how to use, or -
 
-* View How-To-Use.org for the Detail.
+* View [How-To-Use.org](./project/How-To-Use.html) for the Detail.
 
 About:
 
