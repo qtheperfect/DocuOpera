@@ -16,16 +16,29 @@ class Playab{
 
 	this.keyMap = this.buildKey()
     }
-    changeFile(fileName){
-	var c = this.player.src
-	var ct = this.player.currentTime
-	this.player.src = fileName;
-	this.timeA = 0;
-	this.timeB = this.player.duration;
-	console.log("Jumping To Time:"+ct)
-	this.player.currentTime = ct;
 
+    changeFile(fileName){
+	var that = this;
+	p.player.onload = (e)=>{
+	    that.timeA = 0;
+	    that.timeB = that.player.duration;
+	}
+	p.player.src = fileName;
     }
+
+    loadFile(fileObject){
+	var reader = new FileReader();
+	var that = this
+	reader.onload = (e)=> {
+	    that.player.src = reader.result;
+	    that.timeA = 0;
+	    that.timeB = this.player.duration;
+	}
+	reader.readAsDataURL( fileObject )
+    }
+
+    
+    
     
     startPlay(){
 	var that = this
@@ -125,6 +138,11 @@ class Playab{
 	makebtn( ()=>that.righterA(), "righterA");
 	makebtn( ()=>that.lefterB(), "lefterB");
 	makebtn( ()=>that.righterB(), "righterB");
+
+	var fileBtn = document.createElement("input")
+	fileBtn.type = "file";
+	fileBtn.onchange = (e)=>that.loadFile( fileBtn.files[0] )
+	btns.push(fileBtn)				 
 	return btns;
     }
 
