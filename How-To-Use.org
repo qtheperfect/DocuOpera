@@ -3,8 +3,8 @@
 * open the html file in the browser.
 - Require: python3; 
 - Move pdf documents into ./sources/doc/;
-- run `sh RUNME.sh`;
-- visit: http://localhost:13531.
+- Run `sh RUNME.sh`;
+- Open browser, and visit: http://localhost:13531.
 
 
 * Adjust the scope position:
@@ -19,9 +19,9 @@
 - Press H to hide / temporally display preview frame, and -
 - Press ] to retrieve the hidden preview frame.
 
-* Open a pdf file instead of default image documents
-- Press L and input a number from the pdf-list, or -
-- Press O and input an arbitrary document path (the hard way).
+* Open a pdf file
+- Press L and input a number from the server's pdf-list, or -
+- Press O and select an local pdf file (NO UPLOADING INVOLVED).
 
 * Set the automatic view sequence in a page *VERY USEFUL*:
 - Press P to turn on/off setting the automatic jump sequence, and when it's on - 
@@ -38,10 +38,13 @@
 - Press 0 to load audio files;
 - Press C to display/hide the audio panel. And while it's displayed -
 - Audio panels prevents the main shortkeys. Its own short keys are defined in src/plany.js;
-** Audio repeater shortcuts:
-- Space: pause/resume; F: repeat from time-A; G: jump out to time-B; D: back to time-A; A,S,1,2: seek; Q,W,E,R: Adjust time-A, time-B; T: remove time-B; C: hide the audio panel;
+** Audio repeater shortcuts (ONLY when panel is shown):
+- Space: pause/resume; F: repeat from time-A; G: jump out to time-B; D: back to time-A; 
+- A/S,1/2: time seek; Q/W,E/R: Precisely Adjust time-A, time-B; T: quietly remove time-B; 
+- 9/0: volume; 
+- C: show/hide the audio panel;
 
-* Load your own documents:
+* Install your own documents:
 - Copy files: /resources/doc for pdf files, /resources/imgdoc for image files, /resources/audio for audios, /resource/video for videos,  and then -
 - /tools/lsimg.py generates "/src/piclist.js";
 - /tools/lspdf.py generates "/src/pdflist.js";

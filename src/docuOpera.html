@@ -99,8 +99,13 @@
 	 fetchPDF.type = 'file';
 
 	 fetchPDF.onchange = e => {
-	     pdfUrl = e.target.files[0].name;
-	     getPDF(pdfUrl);
+	     var reader = new FileReader();
+	     reader.onload = e=>{
+		 getPDF( reader.result );
+		 bP=-1;
+		 pageForward();
+	     }
+	     reader.readAsDataURL( fetchPDF.files[0])
 	 }
 
 	 var sidePix=300;
@@ -434,8 +439,9 @@
 	     keyDict[53] = ()=>getPageI(bP, true, false)
 
 
-	     
-	     keyDict[79] = function(){getPDF(prompt("Select The File", pdfList[0]));bP=-1; nextPage()};
+	     // keyboard O:
+	     //  keyDict[79] = function(){getPDF(prompt("Select The File", pdfList[0]));bP=-1; nextPage()};
+	     keyDict[79] = (e)=>fetchPDF.click()
 	     keyDict[76] = function(){
 		 pdfSheet = "- "
 		 for (i in pdfList){
