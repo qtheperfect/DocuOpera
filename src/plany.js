@@ -19,11 +19,12 @@ class Playab{
 
     changeFile(fileName){
 	var that = this;
-	p.player.onload = (e)=>{
+	
+	that.player.onload = (e)=>{
 	    that.timeA = 0;
 	    that.timeB = that.player.duration;
 	}
-	p.player.src = fileName;
+	that.player.src = fileName;
     }
 
     loadFile(fileObject){
