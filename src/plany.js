@@ -13,7 +13,6 @@ class Playab{
 	for (var b in this.btns){
 	    this.infoContainer.appendChild(this.btns[b]);
 	}
-
 	this.keyMap = this.buildKey()
     }
 
@@ -38,9 +37,21 @@ class Playab{
 	reader.readAsDataURL( fileObject )
     }
 
-    
-    
-    
+    seniorUrl(){
+	var that = this
+	var uReader = new XMLHttpRequest()
+	uReader.open ('GET', this.player.src, true)
+	uReader.responseType = 'blob'
+	var fReader = new FileReader()
+	uReader.onload = () => {
+	    fReader.readAsDataURL(uReader.response)
+	}
+	fReader.onload = (e) => {
+	    that.player.src = fReader.result;
+	}
+	uReader.send()
+    }
+
     startPlay(){
 	var that = this
 	function fudu(){
@@ -128,7 +139,7 @@ class Playab{
 	    btns.push(b);
 	}
 
-	makebtn( ()=>0, "K" );
+	makebtn( ()=>that.seniorUrl(), "K" );
 	btns[0].addEventListener("keydown", (e)=>that.keyWork(e));
 	makebtn( ()=>that.startStop(), "pause/resume" );
 	makebtn( ()=>that.playBack(), "playBack" );
@@ -139,6 +150,7 @@ class Playab{
 	makebtn( ()=>that.righterA(), "righterA");
 	makebtn( ()=>that.lefterB(), "lefterB");
 	makebtn( ()=>that.righterB(), "righterB");
+	makebtn( ()=>that.seniorUrl(), "Chm");
 
 	var fileBtn = document.createElement("input")
 	fileBtn.type = "file";
@@ -153,19 +165,23 @@ class Playab{
 	keyList[68]  = ()=>that.backToA();
 	keyList[70]  = ()=>that.playBack();
 	keyList[71]  = ()=>that.playNext();
-	keyList[65]  = ()=>that.moveLeft();
-	keyList[83]  = ()=>that.moveRight();
-	keyList[49]  = ()=>that.moveLeft(30);
-	keyList[50]  = ()=>that.moveRight(30);
+	keyList[65]  = ()=>that.moveLeft(3);
+	keyList[83]  = ()=>that.moveRight(3);
+	keyList[49]  = ()=>that.moveLeft(20);
+	keyList[50]  = ()=>that.moveRight(20);
 	keyList[81]  = ()=>that.lefterA();
 	keyList[87]  = ()=>that.righterA();
 	keyList[69]  = ()=>that.lefterB();
 	keyList[82]  = ()=>that.righterB();
 	keyList[84] = ()=>that.removeB();
 	keyList[32]  = ()=>that.startStop();
-	keyList[48] = ()=>{that.player.volume*=1.048576;}
-	keyList[57] = ()=>{that.player.volume*=0.95367431640625;}
+	keyList[48] = ()=>{that.player.volume += 0.05;}
+	keyList[57] = ()=>{that.player.volume -= 0.05;}
 	keyList[67]= ()=>{that.infoContainer.remove()}
+	keyList[88] = ()=>{that.player.playbackRate *= 1.25}
+	keyList[90] = () => {that.player.playbackRate *= 0.8}
+	keyList[86] = () => {that.player.playbackRate = 1}
+
 	return keyList;
     }
     keyWork(e){
