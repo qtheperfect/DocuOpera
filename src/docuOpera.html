@@ -302,7 +302,7 @@
 		 }
 		 return false;
 	     }
-	     result.addEventListener("mousedown", mouseVari);
+	     //result.addEventListener("mousedown", mouseVari);
 	     //	     result.contextmenu(function(){return false;});
 	     // NOTE: WTF
 
@@ -346,7 +346,31 @@
 		 // verbose.innerHTML=x+", " +y; // <- Watch position instantly 
 		 return {x : x, y : y};
 	     }
-
+	     function getRatePos(e, o){
+		 var r = o.getBoundingClientRect()
+		 var x = e.clientX - r.left
+		 var y = e.clientY - r.top
+		 return {x: x/r.width, y:y/r.height}
+	     }
+	     function turnByTouch(e){
+		 var xyr = getRatePos(e, result.parentNode);
+		 var x=xyr.x
+		 var y = xyr.y
+		 if (y<0.4){
+		     if (x < 0.4)
+			 prePage()
+		     else if (x>0.6)
+			 nextPage()
+		 }
+		 else if (y>0.6){
+		     if (x<0.4)
+			 followBetterBackward()
+		     else if (x>0.6)
+			 followBetterForward()
+		 }
+	     }
+	     result.onmousedown = turnByTouch;
+	     
 	     var lastKeyE = false;
 	     repeatKey = 65;	     
 
