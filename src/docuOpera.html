@@ -368,6 +368,16 @@
 		     else if (x>0.6)
 			 followBetterForward()
 		 }
+		 else{
+		     if (x < 0.4)
+			 prePage(bigLeap)
+		     else if (x > 0.6)
+			 nextPage(bigLeap)
+		 }
+		 console.log(plany.btns[0])
+
+		 // Thanks to those ugly things in javascript:
+		 window.setTimeout(()=>plany.btns[0].focus(), 0)
 	     }
 	     result.onmousedown = turnByTouch;
 	     
