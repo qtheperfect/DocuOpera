@@ -1,14 +1,14 @@
-# DocuOpera - A Minimalist Document Viewer With Plentiful Key Shortcuts
+# DocuOpera - A Minimalist Document-Reader & Mp3-Repeater With Plentiful Key Shortcuts
 
 The On-Screen Reading Of Documents Deserves To Be More Convenient!
 
 From now on, whenever reading documents:
 
-* Jump around positions of a page with merely one key;
+* Jump among positions of a page with merely one key;
 
 * With automatically marked history scopes that makes fast scanning never more convenient;
 
-* With an audio repeating player beside the text, which repeats or forwards fully by the control of shortkeys;
+* With an audio repeater beside the text, which repeats or forwards  fully controlled by shortkeys;
 
 * Make full use of the screen space  without one centimeter waste;
 
