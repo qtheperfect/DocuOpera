@@ -139,18 +139,18 @@ class Playab{
 	    btns.push(b);
 	}
 
-	makebtn( ()=>that.seniorUrl(), "K" );
+	makebtn( ()=>{}, "K" );
 	btns[0].addEventListener("keydown", (e)=>that.keyWork(e));
 	makebtn( ()=>that.startStop(), "pause/resume" );
-	makebtn( ()=>that.playBack(), "playBack" );
+	makebtn( ()=>that.playBack(), "Repeat" );
 	makebtn( ()=>that.playNext(), "playNext");
-	makebtn( ()=>that.moveLeft(), "moveLeft");
-	makebtn( ()=>that.moveRight(), "moveRight");
+	makebtn( ()=>that.moveLeft(), "Forward");
+	makebtn( ()=>that.moveRight(), "Backward");
 	makebtn( ()=>that.lefterA(), "lefterA");
 	makebtn( ()=>that.righterA(), "righterA");
 	makebtn( ()=>that.lefterB(), "lefterB");
 	makebtn( ()=>that.righterB(), "righterB");
-	makebtn( ()=>that.seniorUrl(), "Chm");
+	makebtn( ()=>that.seniorUrl(), "FixChrm");
 
 	var fileBtn = document.createElement("input")
 	fileBtn.type = "file";
