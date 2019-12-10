@@ -26,15 +26,18 @@ class Playab{
 	that.player.src = fileName;
     }
 
-    loadFile(fileObject){
-	var reader = new FileReader();
-	var that = this
-	reader.onload = (e)=> {
-	    that.player.src = reader.result;
-	    that.timeA = 0;
-	    that.timeB = this.player.duration;
-	}
-	reader.readAsDataURL( fileObject )
+    loadFile(fileName){
+	// var reader = new FileReader();
+	// var that = this
+	// reader.onload = (e)=> {
+	//     that.player.src = reader.result;
+	//     that.timeA = 0;
+	//     that.timeB = this.player.duration;
+	// }
+	// //reader.readAsDataURL( fileObject )
+	this.player.src = URL.createObjectURL( fileName)
+	this.timeA=0
+	this.player.onload = (e) => {that.timeB = that.player.duration}
     }
 
     seniorUrl(){
@@ -42,13 +45,14 @@ class Playab{
 	var uReader = new XMLHttpRequest()
 	uReader.open ('GET', this.player.src, true)
 	uReader.responseType = 'blob'
-	var fReader = new FileReader()
 	uReader.onload = () => {
-	    fReader.readAsDataURL(uReader.response)
+	    //fReader.readAsDataURL(uReader.response)
+	    that.player.src = URL.createObjectURL(uReader.response)
+	    //that.player.src = uReader.response
 	}
-	fReader.onload = (e) => {
-	    that.player.src = fReader.result;
-	}
+	//var fReader = new FileReader()
+	//fReader.onload = (e) => {
+	    //that.player.src = fReader.result;}
 	uReader.send()
     }
 

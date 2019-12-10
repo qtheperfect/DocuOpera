@@ -14,6 +14,13 @@
        	 document.oncontextmenu = function (event) {
              event.preventDefault();
          };
+
+	 var cookable={}
+	 if (document.cookie.length >0)
+	     cookable = JSON.parse(document.cookie)
+	 else
+	     document.cookie = JSON.stringify(cookable)
+
 	 var bLen = picArray.length;
 	 var bP = -1;
 	 var bigLeap = 10;
@@ -75,15 +82,16 @@
 
 	     
 	     res.getRightCanvas = function(n){
-		 pg = pagesClose.find( (x) => x.p==n )
-		 if (pg){
-		     return pg.c
+		 pgn = pagesClose.findIndex( (x) => x.p==n )
+		 if (pgn>=0){
+		     var pg1 = pagesClose.splice(pgn, 1)
+		     pagesClose = pg1.concat(pagesClose)
+		     return pagesClose[0].c
 		 }
 		 else{
 		     return false
 		 }
 	     }
-
 	     return res
 	 }
 	 var pgs = getPageCache();
@@ -91,22 +99,18 @@
 	 function getPDF(pdfUrl = pdfUrl){
 	     picArray = new Array();
 	     pdfTsk = pdfjsLib.getDocument(pdfUrl);
-	     bP = -1;
-	     pdfTsk.promise.then( function( pdf) {bLen = pdf.numPages})
+	     pdfTsk.promise.then( function(pdf) {bLen = pdf.numPages; getPageI(bP)})
 	     pgs = getPageCache();
 	 }	     
 	 
 	 var fetchPDF = document.createElement('input');
 	 fetchPDF.type = 'file';
-
 	 fetchPDF.onchange = e => {
-	     var reader = new FileReader();
-	     reader.onload = e=>{
-		 getPDF( reader.result );
-		 bP=-1;
-		 pageForward();
-	     }
-	     reader.readAsDataURL( fetchPDF.files[0])
+	 ///    var reader = new FileReader();
+	    pdfUrl = URL.createObjectURL(fetchPDF.files[0]);
+	    getPDF( pdfUrl );
+	    //bP=-1;
+	    pageForward();
 	 }
 
 	 
@@ -257,7 +261,7 @@
 			 y:0,
 			 w:rerec.width / howLarge,
 			 h:rerec.height / howLarge,
-			 l : howLarge,
+			 l: howLarge,
 			 xMax:imrec.width,
 			 yMax:imrec.height	     
 		     }
@@ -481,9 +485,15 @@
 		     pdfSheet = pdfSheet + i + " - " + pdfList[i] + "\n- ";
 		 }
 		 var n  = prompt(pdfSheet + "Input a num:", 0);
+		 if (! pdfList[n]){
+		     n = pdfList.findIndex(x=>x.search(n)>=0)
+		     if (n<0)
+			 return
+		 }
 		 var newTitle = pdfList[n].match(/[^\/]*$/)
 		 document.getElementById("title").innerHTML = "DocuOpera - "+newTitle;
-		 getPDF(pdfList[n]); bP=-1;
+		 getPDF(pdfList[n]); 
+		 cookable.pdfUrl=pdfList[n]
 		 nextPage();
 	     }
 	     
@@ -493,20 +503,63 @@
 		     audioSheet = audioSheet + i + " - " + audioArray[i] + "\n- ";
 		 }
 		 var n  = prompt(audioSheet + "Input a num:", 0);
+		 if (! audioArray[n]) {
+		     n = audioArray.findIndex(x=>x.search(n)>=0)
+		     if (n<0)
+			 return
+		 }
 		 plany.changeFile(audioArray[n])
-
+		 cookable.cAudio=audioArray[n]
+		 cookIn()
 	     }
 
 	     keyDict[67]=function(){
+		 // show/hide audio panel 
 		 if (plany.infoContainer.offsetHeight > 0){
 		     plany.infoContainer.remove();
 		 }
 		 else{
 		     img.parentElement.appendChild(plany.infoContainer);
-		     
 		     plany.btns[0].focus();
 		 }
 		 
+	     }
+
+	     keyDict[188] = cookIn
+	     keyDict[190] = cookOut
+
+	     function cookIn(){
+		 noBlob = s=>!(s.startsWith("blob"))
+		 if (noBlob(pdfUrl))
+		     cookable.pdfUrl = pdfUrl
+		 if (noBlob(plany.player.src))
+		     cookable.cAudio = plany.player.src
+		 if (betterLensList.length > 0)
+		     cookable.betterLensList = betterLensList
+		 cookable.bP = bP
+		 cookable.bLen = bLen
+		 document.cookie=JSON.stringify(cookable)
+	     }
+
+	     function cookOut(){
+		 if (! confirm("Load Everything Again?"))
+		     return;
+		 if (cookable.betterLensList)
+		     betterLensList = cookable.betterLensList
+		 if (cookable.cAudio)
+		     plany.changeFile(cookable.cAudio)
+		   
+		 if (cookable.pdfUrl){
+		     pdfUrl = cookable.pdfUrl
+		     getPDF(cookable.pdfUrl)
+		 }
+		 if (cookable.bLen)
+		     bLen = cookable.bLen
+		 if (cookable.bP){
+		     bP = cookable.bP-1
+		     nextPage()
+		 }
+		   
 	     }
 
 	     
@@ -562,6 +615,7 @@
 	     function quickGoto(){
 		 nPage = prompt("Input The Page:", bLen);
 		 bP = nPage - 1;
+		 cookIn()
 		 nextPage();
 	     }
 	     
@@ -613,7 +667,7 @@
 		 imgRec = img.getBoundingClientRect();
 		 //		 lensRec = lens.getBoundingClientRect();
 		 lensPosition.xMax = imgRec.width;
-		 if (lensPosition.x + lensPosition.w < lensPosition.xMax){
+		 if (lensPosition.x + lensPosition.w/2 < lensPosition.xMax){
 		     lensPosition.x = lensPosition.x  + lensPosition.w * 0.024 * browsePace 
 		 }
 		 putLens()
@@ -698,19 +752,23 @@
 		 historyLens.unshift(li)
 	     }
 	     
-	     betterLensList = new Array();
+	     var betterLensList = new Array();
+	     if (cookable.betterLensList)
+		 betterLensList = cookable.betterLensList
 	     betterPicking  = false;
 	     betterCurrent = -1;
 	     
 	     function startStopBetter(){
 		 if (betterPicking){
-		     alert("Preparation Finished.")
 		     betterPicking = false;
 		     betterCurrent = -1;
 		     killHistory();
+		     alert("Scope List Restored.")
+		     cookable.betterLensList = betterLensList
+		     document.cookie = JSON.stringify(cookable)
 		 }
 		 else{
-		     alert("Press T To Prepare Sections, And P To Finish. ")
+		     alert("Press <T> To Add Scopes, And <P> To Finish. ")
 		     betterLensList.length = 0;
 		     betterPicking = true;
 		 }
@@ -837,6 +895,7 @@
 		 verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
 		 result.style.backgroundImage = "url('" + img.src + "')";
 		 blinkLens();
+		 cookIn()
 		 resetScale(howLarge);
 	     }
 	     
@@ -846,6 +905,7 @@
 		 verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
 		 result.style.backgroundImage = "url('" + img.src + "')";
 		 blinkLens();
+		 cookIn()
 		 resetScale(howLarge);
 	     }
 
@@ -953,9 +1013,8 @@
 		 if (lp.x < 0) {
 		     x = 0;
 		 }
-		 else if (lp.x + lp.w > lp.xMax) {
-		     x = lp.xMax - lp.w;
-		 }
+		 else if (lp.x + lp.w /2 > lp.xMax) {
+		    x = lp.xMax - lp.w;} 
 		 else {
 		     x = lp.x
 		 }
@@ -963,9 +1022,8 @@
 		 if (lp.y < 0) {
 		     y = 0;
 		 }
-		 else if (lp.y + lp.h > lp.yMax) {
-		     y = lp.yMax - lp.h;
-		 }
+		 else if (lp.y + lp.h/2 > lp.yMax) {
+		    y = lp.yMax - lp.h;} 
 		 else {
 		     y = lp.y
 		 }
