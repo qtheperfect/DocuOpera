@@ -16,8 +16,9 @@
          };
 
 	 var cookable={}
-	 if (document.cookie.length >0)
-	     cookable = JSON.parse(document.cookie)
+	 var cookedRecords = document.cookie.split(";")
+	 if (cookedRecords[0].length>0)
+	     cookable = JSON.parse(cookedRecords[0])
 	 else
 	     document.cookie = JSON.stringify(cookable)
 
@@ -25,7 +26,11 @@
 	 var bP = -1;
 	 var bigLeap = 10;
 	 
-	 plany = new Playab(audioArray[0]);
+	 var plany
+	 if (cookable.cAudio)
+	     plany = new Playab(cookable.cAudio)
+	 else
+	     plany = new Playab(audioArray[0])
 	 
 	 function pageForward(imgID, pace = 1){
 	     bP = (bP + pace)%bLen;
@@ -492,6 +497,7 @@
 		 }
 		 var newTitle = pdfList[n].match(/[^\/]*$/)
 		 document.getElementById("title").innerHTML = "DocuOpera - "+newTitle;
+		 pdfUrl=pdfList[n]
 		 getPDF(pdfList[n]); 
 		 cookable.pdfUrl=pdfList[n]
 		 nextPage();
@@ -542,8 +548,16 @@
 	     }
 
 	     function cookOut(){
-		 if (! confirm("Load Everything Again?"))
-		     return;
+		 cookedRecords = document.cookie.split(";")
+		 var cookN = prompt(cookedRecords.join("\n"), cookedRecords.length-1)
+		 if (! cookedRecords[cookN]){
+		     cookN = cookedRecords.findIndex(x=>x.search(cookN)>=0)
+		     if (cookN < 0)
+			 return
+		 }
+
+		 cookable = JSON.parse(cookedRecords[cookN])
+
 		 if (cookable.betterLensList)
 		     betterLensList = cookable.betterLensList
 		 if (cookable.cAudio)
@@ -614,6 +628,10 @@
 
 	     function quickGoto(){
 		 nPage = prompt("Input The Page:", bLen);
+		 if (! nPage){
+		     return
+		 }
+
 		 bP = nPage - 1;
 		 cookIn()
 		 nextPage();
