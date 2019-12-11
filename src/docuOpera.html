@@ -549,7 +549,7 @@
 
 	     function cookOut(){
 		 cookedRecords = document.cookie.split(";")
-		 var cookN = prompt(cookedRecords.join("\n"), cookedRecords.length-1)
+		 var cookN = prompt(cookedRecords.join("\n"), 0)
 		 if (! cookedRecords[cookN]){
 		     cookN = cookedRecords.findIndex(x=>x.search(cookN)>=0)
 		     if (cookN < 0)
