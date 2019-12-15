@@ -24,6 +24,9 @@ class Playab{
 	    that.timeB = that.player.duration;
 	}
 	that.player.src = fileName;
+	that.player.preload="auto";
+	if (navigator.userAgent.search("Chrome")>=0)
+	    that.seniorUrl() 
     }
 
     loadFile(fileName){
@@ -42,6 +45,7 @@ class Playab{
 
     seniorUrl(){
 	var that = this
+	var lastTime = this.player.currentTime
 	var uReader = new XMLHttpRequest()
 	uReader.open ('GET', this.player.src, true)
 	uReader.responseType = 'blob'
@@ -49,6 +53,7 @@ class Playab{
 	    //fReader.readAsDataURL(uReader.response)
 	    that.player.src = URL.createObjectURL(uReader.response)
 	    //that.player.src = uReader.response
+	    that.player.currentTime = lastTime 
 	}
 	//var fReader = new FileReader()
 	//fReader.onload = (e) => {
