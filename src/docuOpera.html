@@ -32,27 +32,31 @@
 	 else
 	     plany = new Playab(audioArray[0])
 	 
-	 function pageForward(imgID, pace = 1){
-	     bP = (bP + pace)%bLen;
-	     img = document.getElementById(imgID);
-	     if (picArray[bP]){
-		 img.src = picArray[bP];
-	     }
-	     else{
-		 getPageI(bP, true, pace);
-	     }
+
+
+	 var resultIndex=0
+	 var results = document.getElementsByClassName("img-zoom-result")
+
+	 function fillResult(r, u){
+	     r.style.backgroundImage="url('" + u + "')"
 	 }
 	 
-	 function pageBackward(imgID, pace = 1){
-	     bP = ((bP-pace) % bLen + bLen) % bLen;
-	     img = document.getElementById(imgID);
+	 function pageForward(pace = 1){
+	     bP = ((bP+pace) % bLen + bLen) % bLen;
+	     img = document.getElementById("myimage");
+	     var result= results[resultIndex]
 
 	     if (picArray[bP]){
 		 img.src = picArray[bP];
+		 fillResult(result,img.src) 
 	     }
 	     else{
-		 getPageI(bP, true, pace);
+		 getPageI(bP, true, pace, true, result=result);
 	     }
+	 }
+
+	 function pageBackward(pace) {
+	     pageForward( - pace )
 	 }
 
 	 
@@ -74,6 +78,8 @@
 		 var pg = new Object;
 		 pg.p = -1;
 		 pg.c = document.createElement("canvas")
+		 pg.c.cimg=document.createElement("img")
+		 pg.c.cimg.className=".img-org"
 		 pagesClose[i] = pg;
 	     }
 
@@ -100,6 +106,7 @@
 	     return res
 	 }
 	 var pgs = getPageCache();
+	 var pubCanvas = document.createElement("canvas")
 	 
 	 function getPDF(pdfUrl = pdfUrl){
 	     picArray = new Array();
@@ -119,11 +126,9 @@
 	 }
 
 	 
-	 function getPageI(i, really=true, pace=1, notForce=true){
-	     console.log("Requesting " + i + " and " + really)
-	     img = document.getElementById("myimage");
-	     result = document.getElementById("myresult");
+	 function getPageI(i, really=true, pace=1, notForce=true,result=document.getElementById("myresult")){
 
+	     img = document.getElementById("myimage");
 	     var cNew = pgs.getRightCanvas(i)
 	     if (cNew && notForce) {
 		 if(really){
@@ -132,14 +137,18 @@
 			canvas.getContext("2d").drawImage(cNew, 0, 0)
 			result.appendChild(canvas) */
 		     // img.parentNode.insertBefore(canvas2, img)
-		     while (result.firstChild){
-			 result.firstChild.remove();
-		     }
+		     while (result.firstChild)
+			 result.removeChild(result.firstChild)
+		     img.src = cNew.cimg.src
+		     fillResult(result, cNew.cimg.src)
 		     result.appendChild(cNew)
-		     
-		     img.src = cNew.toDataURL()
-		     getPageI((i+1)%bLen, false, pace)
-		     getPageI((bLen + i-1)%bLen, false, pace)
+
+		     // load double page here:
+		     // getPageI((bLen + i-1)%bLen, false, pace, result=document.getElementById("myresult2"))
+		     if (pace != 0){
+			 getPageI((i+pace)%bLen, false, pace)
+			 getPageI((bLen + i-pace)%bLen, false, pace)
+		     }
 		 }
 		 return false;
 	     }
@@ -163,31 +172,29 @@
 
 		     if (really){
 			 
-			 // var ctx = canvas.getContext("2d");
-			 //  canvas.width = viewport.width;
-			 // canvas.height = viewport.height;
-			 //result.appendChild(canvas);
-			 
-			 while (result.firstChild){
-			     result.firstChild.remove();
-			 }
+			 while(result.firstChild)
+			     result.removeChild(result.firstChild)
 			 result.appendChild(cNew)
 			 
-			 // img.parentNode.insertBefore(canvas, img)
-			 
-			 
-			 //		     ctx2.drawImage(canvas, 0, 0);
-			 
-			 // canvas2.getContext("2d").drawImage(canvas, 0, 0)
 			 var c = cNew
 			 newRender.then(()=>{
-			     img.src = c.toDataURL();
+			     c.cimg.src = c.toDataURL();
+			     result.style.backgroundImage = "url('" + c.cimg.src + "')"
+			     img.src = c.cimg.src
 			 })
 
 
 		     }
+		     else {
+			 var c = cNew
+			 newRender.then(()=>{
+			     c.cimg.src = c.toDataURL()
+			 })
+		     }
 
-		     if (really){
+		     if (really && pace != 0){
+			 // load double page here
+			 // getPageI((i+1)%bLen, true, pace, result=document.getElementById("myresult2"))
 			 getPageI((i+pace)%bLen, false, pace)
 			 getPageI((i-pace + pace*bLen)%bLen, false, pace)
 		     }
@@ -257,6 +264,7 @@
 	     var lensPosition;
 
 	     function blinkLens( firstTime = false ) {
+		 var result  = results[results.length - 1]
 		 rerec = result.parentNode.getBoundingClientRect();
 		 imrec = img.getBoundingClientRect();
 		 img.parentElement.insertBefore(lens, img);
@@ -367,9 +375,9 @@
 		 var y = xyr.y
 		 if (y<0.4){
 		     if (x < 0.4)
-			 prePage()
+			 prePage(1)
 		     else if (x>0.6)
-			 nextPage()
+			 nextPage(1)
 		 }
 		 else if (y>0.6){
 		     if (x<0.4)
@@ -379,7 +387,7 @@
 		 }
 		 else{
 		     if (x < 0.4)
-			 prePage(bigLeap)
+			 prePage(bigLeap )
 		     else if (x > 0.6)
 			 nextPage(bigLeap)
 		 }
@@ -388,7 +396,7 @@
 		 // Thanks to those ugly things in javascript:
 		 window.setTimeout(()=>plany.btns[0].focus(), 0)
 	     }
-	     result.onmousedown = turnByTouch;
+	     result.parentNode.onmousedown = turnByTouch;
 	     
 	     var lastKeyE = false;
 	     repeatKey = 65;	     
@@ -448,6 +456,7 @@
 
 	     keyDict[75] = quickGoto;
 
+
 	     // H key:
 
 	     hideOrNot = function(){
@@ -472,8 +481,8 @@
 	     keyDict[72] = hideOrNot;
 	     keyDict[221] = bringSideBack;
 
-	     keyDict[82] = nextPage;
-	     keyDict[87] = prePage;
+	     keyDict[82] = ()=>nextPage(1);
+	     keyDict[87] = ()=>prePage(1);
 	     keyDict[49] = function(){prePage(bigLeap)};
 	     keyDict[50] = function(){nextPage(bigLeap)};
 
@@ -577,6 +586,18 @@
 	     }
 
 	     
+	     keyDict[187]=()=>{ // key '=' show/hide secondary pageview on the right-half 
+		 var tester = secondaryContainer.offsetHeight 
+		 if ( tester && tester > 0){
+		     document.getElementById("res-container").removeChild(secondaryContainer)
+		 }
+		 else{
+		     document.getElementById("res-container").appendChild(secondaryContainer)
+		 }
+		 results = document.getElementsByClassName("img-zoom-result")
+		 resultIndex = 0
+	     }
+	     keyDict[187]()
 	     /* 
 	      * 	     toRepeatKey = 65;	     
 	      * 	     keyDict[toRepeatKey] = toRepeat;
@@ -692,7 +713,7 @@
 		 followLens()
 	     }
 
-	     function resetScale(ns){
+	     function resetScale(ns, result=results[resultIndex]){
 		 howLarge = ns;
 		 lensPosition.l = ns;
 		 //set lens area
@@ -727,6 +748,7 @@
 
 	     function putLargerLens(k){
 		 // Put the k-th lens object to the larger board.
+		 var result = results[resultIndex]
 		 li = historyLens[k];
 		 if (li.son){
 		     li.son.remove();
@@ -804,7 +826,7 @@
 	     }
 	     
 	     function followBetterForward(){
-		 l = betterLensList.length;
+		 var l = betterLensList.length;
 		 if (l <= 0) {
 		     return 0
 		 }
@@ -816,6 +838,8 @@
 		     }
 		     else{
 			 betterCurrent =  betterCurrent + 1
+			 if (results.length > 1)
+			     nextPage(0, true)
 		     }
 		     retrieveLens( betterLensList[betterCurrent] );
 		     verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
@@ -867,7 +891,6 @@
 	     }
 	     
 	     function followBetterBackward(){
-
 		 l = betterLensList.length;
 		 if (l <= 0) {
 		     return 0
@@ -880,6 +903,8 @@
 		     }
 		     else {
 			 betterCurrent =  betterCurrent - 1;
+			 if (results.length>1)
+			     nextPage(0, true)
 		     }
 		     verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
 		     retrieveLens( betterLensList[betterCurrent] );
@@ -888,6 +913,7 @@
 	     }
 
 	     function gotoFirstLast(){
+		 resultIndex = (resultIndex + 1) % results.length
 		 if (betterLensList.length <= 0) {
 		     return;
 		 }
@@ -907,27 +933,30 @@
 	     yPace = 0.6;
 	     xPace = 0.8;
 	     
-	     function nextPage(pace = 1){
-		 killHistory();
-		 pageForward(imgID, pace);
+	     function nextPage(pace = 1, pertainHistory=false){
+		 resultIndex=(resultIndex + 1) % results.length
+		 if (! pertainHistory)
+		     killHistory();
+		 pageForward(pace);
 		 verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
-		 result.style.backgroundImage = "url('" + img.src + "')";
 		 blinkLens();
 		 cookIn()
 		 resetScale(howLarge);
 	     }
 	     
-	     function prePage( pace = 1){
-		 killHistory();
-		 pageBackward(imgID, pace);
+	     function prePage( pace = 1, pertainHistory=false){
+		 resultIndex = (resultIndex + 1) % results.length
+		 if (! pertainHistory)
+		     killHistory();
+		 pageBackward( pace);
 		 verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
-		 result.style.backgroundImage = "url('" + img.src + "')";
 		 blinkLens();
 		 cookIn()
 		 resetScale(howLarge);
 	     }
 
 	     function stepLens( ){
+		 // Obsolete !!
 		 // Some steps can be simplified using function getLensPos() ...
 		 
 		 lenRec = lens.getBoundingClientRect();
@@ -963,6 +992,7 @@
 	     }
 	     
 	     function stepBackLens( ){
+		 // obsolete !!
 		 lenRec = lens.getBoundingClientRect();
 		 imgRec = img.getBoundingClientRect();
 
@@ -998,7 +1028,7 @@
 		 
 	     }
 	     
-	     function moveLarge(x, y) {
+	     function moveLarge(x, y, result=results[resultIndex]) {
 		 result.style.left = "-" + x + "px";
 		 result.style.top = "-" + y + "px";
 	     }
@@ -1025,6 +1055,7 @@
 		 lp = betterLens()
 		 
 		 moveLarge( lp.x * howLarge, lp.y * howLarge );
+		 
 	     }
 
 	     function betterLens(lp = lensPosition){
@@ -1063,8 +1094,12 @@
 		<img id="myimage" class="img-org" src="project/img_cover.png" >
 		<div id="verbose"> <a href=project/src/plany.html>Watch Video In Plany</a></div>	
 	    </div>
-	    <div class="res-container">
+	    <div id="res-container" class="res-container">
 		<div id="myresult" class="img-zoom-result" ></div>
+		<div id="res-container-2", class="res-container-right">
+		    <div id="myresult2" class="img-zoom-result" ></div>
+		</div>
+		    
 	    </div>
 	</div>
 	
@@ -1075,6 +1110,7 @@
 	 //	 f =  imageZoom("myimage", "myresult");
 	 img = document.getElementById("myimage")
 	 result = document.getElementById("myresult")
+	 secondaryContainer = document.getElementById("res-container-2")
 	 lens = document.getElementsByClassName("img-zoom-lens")[0];
 	</script>
 

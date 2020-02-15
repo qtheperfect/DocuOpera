@@ -102,6 +102,20 @@
     overflow:hidden;
 }
 
+.res-container-right {
+    border: 1px solid #d4d4d4;
+    position: absolute;
+    /*set the size of the result div:*/
+    left: 50%;
+    right:0px;
+    //    height: 400px;
+    top:0px;
+    bottom:0px;
+    overflow:hidden;
+}
+
+
+
 .allcontainer {
     position:relative;
     width:100%;
