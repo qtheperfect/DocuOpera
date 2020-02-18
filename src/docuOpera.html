@@ -462,8 +462,11 @@
 	     hideOrNot = function(){
 		 if (img.parentElement.style.zIndex != -1){
 		     img.parentElement.style.zIndex = -1;
-		     if (pageBar){pageBar.style.right="100%";}
-		     result.parentElement.style.left = "3px";
+		     if (pageBar){
+			 pageBar.style.left="0px";
+			 pageBar.style.right="100%"
+		     }
+		     result.parentElement.style.left = "5px";
 		     followLens();
 		 }
 		 else {
@@ -473,7 +476,11 @@
 
 	     bringSideBack = function(){
 		 img.parentElement.style.zIndex = 9;
-		 if (pageBar) {pageBar.style.right="0px";}
+		 if (pageBar) {
+		     pageBar.style.right="0px";
+		     pageBar.style.left="";
+
+		 }
 		 result.parentElement.style.left = sidePix + "px";
 		 followLens();		     
 	     }
@@ -717,11 +724,10 @@
 		 howLarge = ns;
 		 lensPosition.l = ns;
 		 //set lens area
-		 resrec = result.parentNode.getBoundingClientRect();
+		 resrec = results[results.length-1].parentNode.getBoundingClientRect();
 		 lensPosition.w = resrec.width / ns;
 		 lensPosition.h = resrec.height / ns;
 		 putLens()
-		 console.log(howLarge);
 		 // set result area
 		 imgrec = img.getBoundingClientRect();
 		 result.style.width = imgrec.width * ns + "px";

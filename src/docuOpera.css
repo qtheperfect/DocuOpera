@@ -46,8 +46,11 @@
 
 .page-bar {
     position:absolute;
-    border: 3px solid rgba(200, 77, 44, 1);
-    z-index:10;
+    border: 1px solid rgba(100,100,220,1);
+    border-top: 5px solid rgba(250,20,10,1);
+    background-color:blue;
+    width:5px;
+    z-index:100;
     right:0px;
     bottom:0px;
 }
@@ -91,7 +94,7 @@
 }
 
 .res-container {
-    border: 1px solid #d4d4d4;
+    border: 0px solid #d4d4d4;
     position: absolute;
     /*set the size of the result div:*/
     left: 300px;
