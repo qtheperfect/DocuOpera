@@ -1,4 +1,4 @@
-#: /usr/bin
+#!/bin/bash 
 
 serverPort="13531"
 imagedir="project/resources/imgdoc/"

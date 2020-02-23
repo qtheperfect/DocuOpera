@@ -26,6 +26,7 @@
 * Set the automatic view sequence in a page *VERY USEFUL*:
 - Press P to turn on/off setting the automatic jump sequence, and when it's on - 
 - Press T to add the current page section (lens position) to the sequence;
+- Press . to load cookied setup, or , to open url window with setup information in uri 
 
 ** AFTER the lens sequence is prepared :
 - Press SPACE/V to move forward/backward;
@@ -43,6 +44,7 @@
 - A/S,1/2: time seek; Q/W,E/R: Precisely Adjust time-A, time-B; T: quietly remove time-B; 
 - 9/0: volume; 
 - C: show/hide the audio panel;
+- Use arrow-keys to turn pages as the panel on.
 
 * Install your own documents:
 - Copy files: /resources/doc for pdf files, /resources/imgdoc for image files, /resources/audio for audios, /resource/video for videos,  and then -
@@ -58,6 +60,9 @@
 * Version 2.0 Note:
 - Opera with audios !!!
 
+  
+* Version 3.0 note:
+- Press = and view double-page
 * TODO List:
 - Text searching
 - Taking notes

@@ -3,23 +3,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2020-02-23 Sun 09:53 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>How To Use:</title>
-<!-- 2019-06-23 日 12:42 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="generator" content="Org-mode" />
-<meta  name="author" content="User" />
+<meta name="generator" content="Org mode" />
+<meta name="author" content="guolh2009" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -46,27 +53,111 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -86,6 +177,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <script type="text/javascript">
@@ -93,7 +185,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -142,216 +234,189 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. open the html file in the browser.</a></li>
-<li><a href="#sec-2">2. Adjust the scope position:</a></li>
-<li><a href="#sec-3">3. Open a pdf file</a></li>
-<li><a href="#sec-4">4. Set the automatic view sequence in a page <b>VERY USEFUL</b>:</a>
+<li><a href="#org69dacdf">1. open the html file in the browser.</a></li>
+<li><a href="#org0e350db">2. Adjust the scope position:</a></li>
+<li><a href="#orgb9d913a">3. Open a pdf file</a></li>
+<li><a href="#orgc580291">4. Set the automatic view sequence in a page <b>VERY USEFUL</b>:</a>
 <ul>
-<li><a href="#sec-4-1">4.1. AFTER the lens sequence is prepared :</a></li>
+<li><a href="#org1056be3">4.1. AFTER the lens sequence is prepared :</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. <b>NEW</b> Play audios:</a>
+<li><a href="#orgd7ebfbf">5. <b>NEW</b> Play audios:</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Audio repeater shortcuts (ONLY when panel is shown):</a></li>
+<li><a href="#org6e4755d">5.1. Audio repeater shortcuts (ONLY when panel is shown):</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. Install your own documents:</a></li>
-<li><a href="#sec-7">7. Version 1.1 Note:</a></li>
-<li><a href="#sec-8">8. Version 2.0 Note:</a></li>
-<li><a href="#sec-9">9. <span class="todo TODO">TODO</span> List:</a></li>
-<li><a href="#sec-10">10. About:</a>
+<li><a href="#org9367b77">6. Install your own documents:</a></li>
+<li><a href="#orgcac61ac">7. Version 1.1 Note:</a></li>
+<li><a href="#org80be309">8. Version 2.0 Note:</a></li>
+<li><a href="#org3a3fa66">9. Version 3.0 note:</a></li>
+<li><a href="#org3b4dcb8">10. <span class="todo TODO">TODO</span> List:</a></li>
+<li><a href="#orgeb7e174">11. About:</a>
 <ul>
-<li><a href="#sec-10-1">10.1. Page:</a></li>
-<li><a href="#sec-10-2">10.2. LICENSE:</a></li>
+<li><a href="#org52dbd4d">11.1. Page:</a></li>
+<li><a href="#org3103d01">11.2. LICENSE:</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> open the html file in the browser.</h2>
+<div id="outline-container-org69dacdf" class="outline-2">
+<h2 id="org69dacdf"><span class="section-number-2">1</span> open the html file in the browser.</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
-<li>Require: python3; 
-</li>
-<li>Move pdf documents into ./sources/doc/;
-</li>
-<li>Run `sh RUNME.sh`;
-</li>
-<li>Open browser, and visit: <a href="http://localhost:13531">http://localhost:13531</a>.
-</li>
+<li>Require: python3;</li>
+<li>Move pdf documents into ./sources/doc/;</li>
+<li>Run `sh RUNME.sh`;</li>
+<li>Open browser, and visit: <a href="http://localhost:13531">http://localhost:13531</a>.</li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Adjust the scope position:</h2>
+<div id="outline-container-org0e350db" class="outline-2">
+<h2 id="org0e350db"><span class="section-number-2">2</span> Adjust the scope position:</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
-<li>Press Z / X to zoom-in/out the lens;
-</li>
-<li>Press E, D, S, F, to move the lens up, down, left, right.;
-</li>
-<li>Press W, R to turn pages;
-</li>
-<li>Press 1, 2 to take 10-page jumps.
-</li>
-<li>Press B to alter the mode of fast/slow moving for lens;
-</li>
-<li>Press A to repeat the last command for extra 5 times; 
-</li>
-<li>Press K to quickly jump to pages;
-</li>
-<li>Press 5 to refresh page (if necessary);
-</li>
-<li>Press H to hide / temporally display preview frame, and -
-</li>
-<li>Press ] to retrieve the hidden preview frame.
-</li>
+<li>Press Z / X to zoom-in/out the lens;</li>
+<li>Press E, D, S, F, to move the lens up, down, left, right.;</li>
+<li>Press W, R to turn pages;</li>
+<li>Press 1, 2 to take 10-page jumps.</li>
+<li>Press B to alter the mode of fast/slow moving for lens;</li>
+<li>Press A to repeat the last command for extra 5 times;</li>
+<li>Press K to quickly jump to pages;</li>
+<li>Press 5 to refresh page (if necessary);</li>
+<li>Press H to hide / temporally display preview frame, and -</li>
+<li>Press ] to retrieve the hidden preview frame.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Open a pdf file</h2>
+<div id="outline-container-orgb9d913a" class="outline-2">
+<h2 id="orgb9d913a"><span class="section-number-2">3</span> Open a pdf file</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
-<li>Press L and input a number from the server's pdf-list, or -
-</li>
-<li>Press O and select an local pdf file (NO UPLOADING INVOLVED).
-</li>
+<li>Press L and input a number from the server's pdf-list, or -</li>
+<li>Press O and select an local pdf file (NO UPLOADING INVOLVED).</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Set the automatic view sequence in a page <b>VERY USEFUL</b>:</h2>
+<div id="outline-container-orgc580291" class="outline-2">
+<h2 id="orgc580291"><span class="section-number-2">4</span> Set the automatic view sequence in a page <b>VERY USEFUL</b>:</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
-<li>Press P to turn on/off setting the automatic jump sequence, and when it's on - 
-</li>
-<li>Press T to add the current page section (lens position) to the sequence;
-</li>
+<li>Press P to turn on/off setting the automatic jump sequence, and when it's on -</li>
+<li>Press T to add the current page section (lens position) to the sequence;</li>
+<li>Press . to load cookied setup, or , to open url window with setup information in uri</li>
 </ul>
 </div>
 
-<div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> AFTER the lens sequence is prepared :</h3>
+<div id="outline-container-org1056be3" class="outline-3">
+<h3 id="org1056be3"><span class="section-number-3">4.1</span> AFTER the lens sequence is prepared :</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
-<li>Press SPACE/V to move forward/backward;
-</li>
-<li>Press G to go to the first/last lens position;
-</li>
+<li>Press SPACE/V to move forward/backward;</li>
+<li>Press G to go to the first/last lens position;</li>
 <li>Press Q to remove the history window mark
-<i>By default, the history window positions will be marked in the main window as dashed boxes, which facilitates fast scanning.</i>
-</li>
-<li>Press 4 to start/stop the automatic forwarding mode.
-</li>
+<i>By default, the history window positions will be marked in the main window as dashed boxes, which facilitates fast scanning.</i></li>
+<li>Press 4 to start/stop the automatic forwarding mode.</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> <b>NEW</b> Play audios:</h2>
+<div id="outline-container-orgd7ebfbf" class="outline-2">
+<h2 id="orgd7ebfbf"><span class="section-number-2">5</span> <b>NEW</b> Play audios:</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
-<li>Press 0 to load audio files;
-</li>
-<li>Press C to display/hide the audio panel. And while it's displayed -
-</li>
-<li>Audio panels prevents the main shortkeys. Its own short keys are defined in src/plany.js;
-</li>
+<li>Press 0 to load audio files;</li>
+<li>Press C to display/hide the audio panel. And while it's displayed -</li>
+<li>Audio panels prevents the main shortkeys. Its own short keys are defined in src/plany.js;</li>
 </ul>
 </div>
-<div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Audio repeater shortcuts (ONLY when panel is shown):</h3>
+<div id="outline-container-org6e4755d" class="outline-3">
+<h3 id="org6e4755d"><span class="section-number-3">5.1</span> Audio repeater shortcuts (ONLY when panel is shown):</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
-<li>Space: pause/resume; F: repeat from time-A; G: jump out to time-B; D: back to time-A; 
-</li>
-<li>A/S,1/2: time seek; Q/W,E/R: Precisely Adjust time-A, time-B; T: quietly remove time-B; 
-</li>
-<li>9/0: volume; 
-</li>
-<li>C: show/hide the audio panel;
-</li>
+<li>Space: pause/resume; F: repeat from time-A; G: jump out to time-B; D: back to time-A;</li>
+<li>A/S,1/2: time seek; Q/W,E/R: Precisely Adjust time-A, time-B; T: quietly remove time-B;</li>
+<li>9/0: volume;</li>
+<li>C: show/hide the audio panel;</li>
+<li>Use arrow-keys to turn pages as the panel on.</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Install your own documents:</h2>
+<div id="outline-container-org9367b77" class="outline-2">
+<h2 id="org9367b77"><span class="section-number-2">6</span> Install your own documents:</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
-<li>Copy files: /resources/doc for pdf files, /resources/imgdoc for image files, /resources/audio for audios, /resource/video for videos,  and then -
-</li>
-<li>/tools/lsimg.py generates "/src/piclist.js";
-</li>
-<li>/tools/lspdf.py generates "/src/pdflist.js";
-</li>
-<li>/tools/lsaudio.py generates "/src/audiolist.js";
-</li>
-<li>/RUNME.sh gererates all above.
-</li>
+<li>Copy files: /resources/doc for pdf files, /resources/imgdoc for image files, /resources/audio for audios, /resource/video for videos,  and then -</li>
+<li>/tools/lsimg.py generates "/src/piclist.js";</li>
+<li>/tools/lspdf.py generates "/src/pdflist.js";</li>
+<li>/tools/lsaudio.py generates "/src/audiolist.js";</li>
+<li>/RUNME.sh gererates all above.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Version 1.1 Note:</h2>
+<div id="outline-container-orgcac61ac" class="outline-2">
+<h2 id="orgcac61ac"><span class="section-number-2">7</span> Version 1.1 Note:</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
-<li><b>PDF Supported</b> 
-</li>
-<li>Animated timing bar.
-</li>
+<li><b>PDF Supported</b></li>
+<li>Animated timing bar.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Version 2.0 Note:</h2>
+<div id="outline-container-org80be309" class="outline-2">
+<h2 id="org80be309"><span class="section-number-2">8</span> Version 2.0 Note:</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
-<li>Opera with audios !!!
-</li>
+<li>Opera with audios !!!</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> <span class="todo TODO">TODO</span> List:</h2>
+
+<div id="outline-container-org3a3fa66" class="outline-2">
+<h2 id="org3a3fa66"><span class="section-number-2">9</span> Version 3.0 note:</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
-<li>Text searching
-</li>
-<li>Taking notes
-</li>
-<li>PDF performance issues [DONE !!!]
-</li>
+<li>Press = and view double-page</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3b4dcb8" class="outline-2">
+<h2 id="org3b4dcb8"><span class="section-number-2">10</span> <span class="todo TODO">TODO</span> List:</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li>Text searching</li>
+<li>Taking notes</li>
+<li>PDF performance issues [DONE !!!]</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> About:</h2>
-<div class="outline-text-2" id="text-10">
-</div><div id="outline-container-sec-10-1" class="outline-3">
-<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Page:</h3>
-<div class="outline-text-3" id="text-10-1">
+<div id="outline-container-orgeb7e174" class="outline-2">
+<h2 id="orgeb7e174"><span class="section-number-2">11</span> About:</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-org52dbd4d" class="outline-3">
+<h3 id="org52dbd4d"><span class="section-number-3">11.1</span> Page:</h3>
+<div class="outline-text-3" id="text-11-1">
 <p>
 <a href="https://github.com/fulgenssequar/docuOpera/">https://github.com/fulgenssequar/docuOpera/</a>
 </p>
 </div>
 </div>
-<div id="outline-container-sec-10-2" class="outline-3">
-<h3 id="sec-10-2"><span class="section-number-3">10.2</span> LICENSE:</h3>
-<div class="outline-text-3" id="text-10-2">
+<div id="outline-container-org3103d01" class="outline-3">
+<h3 id="org3103d01"><span class="section-number-3">11.2</span> LICENSE:</h3>
+<div class="outline-text-3" id="text-11-2">
 <p>
 <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
 </p>
@@ -360,9 +425,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: User</p>
-<p class="date">Created: 2019-06-23 日 12:42</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.2 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="author">Author: guolh2009</p>
+<p class="date">Created: 2020-02-23 Sun 09:53</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

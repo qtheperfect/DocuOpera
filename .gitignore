@@ -476,3 +476,7 @@ venv.bak/
 deps/deps.jl
 
 ## end julia ignore
+
+
+/video
+/resources/video

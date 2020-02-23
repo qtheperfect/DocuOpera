@@ -17,10 +17,32 @@
 
 	 var cookable={}
 	 var cookedRecords = document.cookie.split(";")
-	 if (cookedRecords[0].length>0)
+
+
+	 var baseLoc = window.location.href.match("[^/]+//[^?]+")
+	 var seekto = window.location.href.match(/seekto=([^&].*)/)
+	 if (seekto) {
+	     seekto = decodeURI(seekto[1])
+	     cookable = JSON.parse(seekto)
+	     document.cookie = JSON.stringify(cookable)
+	 }
+	 else if (cookedRecords[0].length>0){
 	     cookable = JSON.parse(cookedRecords[0])
+	     var newLoc = seekableURI()
+	     if (confirm("Follow cookie to " + newLoc + " ?")) {
+		 window.location.href = newLoc
+	     }
+	     
+	 }
 	 else
 	     document.cookie = JSON.stringify(cookable)
+
+
+	 function seekableURI(){
+	     seekto = JSON.stringify(cookable)
+	     return baseLoc + "?seekto=" + encodeURI(seekto)
+	 }
+	 	 
 
 	 var bLen = picArray.length;
 	 var bP = -1;
@@ -391,7 +413,6 @@
 		     else if (x > 0.6)
 			 nextPage(bigLeap)
 		 }
-		 console.log(plany.btns[0])
 
 		 // Thanks to those ugly things in javascript:
 		 window.setTimeout(()=>plany.btns[0].focus(), 0)
@@ -401,14 +422,18 @@
 	     var lastKeyE = false;
 	     repeatKey = 65;	     
 
-	     function translateKey(e){
+	     var keyDict = []
+	     
+	     function translateKey(e, minorKeyDict=null){
 		 // note: preventDefault to prevent default.
-		 if (! keyDict[e.keyCode]){
+		 if (! minorKeyDict)
+		     minorKeyDict=keyDict
+		 if (! minorKeyDict[e.keyCode]){
 		     return;
 		 }
 		 e.preventDefault();
 		 console.log( e.keyCode );
-		 keyDict[e.keyCode]();
+		 minorKeyDict[e.keyCode]();
 		 if (e.keyCode != repeatKey){
 		     lastKeyE = e;
 		 }
@@ -416,7 +441,6 @@
 
 	     
 	     
-	     keyDict = new Array();
 	     /* // right hand main mode:
 		keyDict[190] = function(){resetScale( howLarge * 0.9765625 ) ; };
 		keyDict[188] = function(){resetScale( howLarge * 1.024 );};
@@ -537,17 +561,25 @@
 
 	     keyDict[67]=function(){
 		 // show/hide audio panel 
+		 var minor_keyDict = new Array()
+		 minor_keyDict[37]=followBetterBackward
+		 minor_keyDict[39]=followBetterForward
+		 minor_keyDict[38]=prePage
+		 minor_keyDict[40]=nextPage
+		 
 		 if (plany.infoContainer.offsetHeight > 0){
 		     plany.infoContainer.remove();
 		 }
 		 else{
 		     img.parentElement.appendChild(plany.infoContainer);
 		     plany.btns[0].focus();
+		     plany.btns[0].onkeydown=(e)=>translateKey(e, minor_keyDict)
 		 }
 		 
 	     }
 
-	     keyDict[188] = cookIn
+
+	     keyDict[188] = ()=>{if(confirm(seekableURI())){window.open(seekableURI())}}
 	     keyDict[190] = cookOut
 
 	     function cookIn(){
@@ -574,8 +606,10 @@
 
 		 cookable = JSON.parse(cookedRecords[cookN])
 
-		 if (cookable.betterLensList)
+		 if (cookable.betterLensList){
 		     betterLensList = cookable.betterLensList
+		     gotoFirstLast(true)
+		 }
 		 if (cookable.cAudio)
 		     plany.changeFile(cookable.cAudio)
 		   
@@ -918,13 +952,13 @@
 		 }
 	     }
 
-	     function gotoFirstLast(){
+	     function gotoFirstLast(forceFirst=false){
 		 resultIndex = (resultIndex + 1) % results.length
 		 if (betterLensList.length <= 0) {
 		     return;
 		 }
 		 addToHistory();
-		 if (betterCurrent == 0){
+		 if (betterCurrent == 0 && ! forceFirst ){
 		     betterCurrent = betterLensList.length - 1;
 		 }
 		 else {
