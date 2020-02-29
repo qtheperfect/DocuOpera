@@ -21,7 +21,14 @@
 
 	 var baseLoc = window.location.href.match("[^/]+//[^?]+")
 	 var seekto = window.location.href.match(/seekto=([^&].*)/)
-	 if (seekto) {
+
+	 var pdfUrl = window.location.href.match(/pdf=([^&].*)/)
+
+	 if (pdfUrl){
+	     pdfUrl=pdfUrl[1];
+	     getPDF(pdfUrl);
+	 }
+	 else if (seekto) {
 	     seekto = decodeURI(seekto[1])
 	     cookable = JSON.parse(seekto)
 	     document.cookie = JSON.stringify(cookable)
@@ -82,7 +89,6 @@
 	 }
 
 	 
-	 var pdfUrl = pdfList[0];
 	 var pdfTsk;
 	 var sidePix=300;
 	 
