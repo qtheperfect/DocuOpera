@@ -1,0 +1,20 @@
+{
+    "manifest_version":2,
+    "name":"DocuOpera",
+    "description":"A Minimalism Pdf Reader And Audio Repeater With Plentiful Key Shortcuts",
+    "version":"1.0",
+    "web_accessible_resources":["*", "*/*"],
+    "content_security_policy": "default-src 'self'; script-src 'self'",
+    "permissions":["storage", "tabs", "notifications", "http://*/*", "https://*/*"],
+    "browser_action":{
+	"default_title":"DocuOpera"
+	//"default_popup":"src/plany.html"
+    },
+    "background":{
+	"scripts":["inplug/background.js"]
+    },
+    // "content_scripts":[
+    // 	{"matches":["https://*/*", "http://*/*"], "js":["content.js"]}
+    // ],
+    "icons":{"128":"favicon.ico"}
+}
