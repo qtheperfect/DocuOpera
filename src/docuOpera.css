@@ -81,6 +81,17 @@
     z-index:10;
 }
 
+.future-lens {
+    position:absolute;
+    overflow:hidden;
+    border-left: 3px dotted  ;
+    border-right: 3px dotted  rgba(11,156,49, 0.6) ;
+    border-top: 2px dotted  rgba(11,156,49, 0.6) ;
+    border-bottom: 2px dotted  rgba(11,156,49, 0.6) ;
+    //    backgroundColor: rgba(0.4,0.3,0.0.4);
+    outline: 1px solid  rgba(11,156,49, 0.6) ;
+    z-index:10;
+}
 
 .img-zoom-result {
     border: 1px solid #d4d4d4;
@@ -116,7 +127,6 @@
     bottom:0px;
     overflow:hidden;
 }
-
 
 
 .allcontainer {

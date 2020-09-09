@@ -469,6 +469,8 @@ function imageZoom(imgID, resultID) {
 
     
     keyDict[81] = killHistory;
+    keyDict[220] = ( ) => {window.futureMode = ! window.futureMode};
+
     keyDict[66] = browseSwitch;
 
     keyDict[75] = quickGoto;
@@ -577,9 +579,9 @@ function imageZoom(imgID, resultID) {
 
     function cookIn(){
 	noBlob = (s)=>!(s.startsWith("blob"))
-	if (noBlob(pdfUrl))
+	if (pdfUrl && noBlob(pdfUrl))
 	    cookable.pdfUrl = pdfUrl
-	if (noBlob(plany.player.src))
+	if (plany.player.src && noBlob(plany.player.src))
 	    cookable.cAudio = plany.player.src
 	if (betterLensList.length > 0)
 	    cookable.betterLensList = betterLensList
@@ -763,7 +765,7 @@ function imageZoom(imgID, resultID) {
 	result.style.height =  imgrec.height * ns + "px";
 	result.style.backgroundSize = (imgrec.width * howLarge) + "px " + (imgrec.height * howLarge) + "px";
 	followLens();
-	putAllHistory();
+	putJumpMark();
 	
     }
 
@@ -794,6 +796,7 @@ function imageZoom(imgID, resultID) {
 	}
 	result.appendChild(newLen);
 	historyLens[k].son = newLen;
+	return newLen
     }
 
     function putAllHistory(){
@@ -801,13 +804,37 @@ function imageZoom(imgID, resultID) {
 	    putLargerLens(k);
 	}
     }
-    function killHistory(){
-	while( historyLens.length > 0 ){
-	    badLi = historyLens.pop()
-	    if (badLi.son){
-		badLi.son.remove()
-	    }
+    function putFuture(){
+	killHistory()
+	if (betterCurrent >= betterLensList.length - 1){
+	    return
 	}
+	var result = results[resultIndex]
+	li = betterLensList[ betterCurrent + 1];
+	newLen = largerLens( li );
+	result.appendChild(newLen);
+	newLen.className = "future-lens"
+    }
+
+    window.futureMode = false
+
+    var putJumpMark;
+
+    function putJumpMark() {
+	if (futureMode)
+	    putFuture( )
+	else
+	    putAllHistory( )
+    }
+    
+    function killHistory(){
+	historyLens = []
+	var lens1 = [ ...document.getElementsByClassName("last-lens") ]
+	var lens2 = [ ...document.getElementsByClassName("history-lens") ]
+	var lens3 = [ ...document.getElementsByClassName("future-lens") ]
+	lens1.forEach(e => e.remove())
+	lens2.forEach(e => e.remove())
+	lens3.forEach(e => e.remove())
     }
     
     function retrieveLens(li) {
@@ -855,7 +882,7 @@ function imageZoom(imgID, resultID) {
 	    li = betterLens();
 	    betterLensList.push(li)
 	    addToHistory();
-	    putAllHistory();
+	    putJumpMark();
 	    verbose.innerHTML = "List: " + betterLensList.length;
 	}
     }
@@ -878,7 +905,7 @@ function imageZoom(imgID, resultID) {
 	    }
 	    retrieveLens( betterLensList[betterCurrent] );
 	    verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
-	    putAllHistory();
+	    putJumpMark();
 	}
     }
 
@@ -943,7 +970,7 @@ function imageZoom(imgID, resultID) {
 	    }
 	    verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
 	    retrieveLens( betterLensList[betterCurrent] );
-	    putAllHistory();
+	    putJumpMark();
 	}
     }
 
@@ -960,7 +987,7 @@ function imageZoom(imgID, resultID) {
 	    betterCurrent = 0;
 	}
 	retrieveLens( betterLensList[ betterCurrent ] );
-	putAllHistory();
+	putJumpMark();
 	verbose.innerHTML =  betterCurrent + ", p" + bP + "/ " + bLen;
     }
     
@@ -1023,7 +1050,7 @@ function imageZoom(imgID, resultID) {
 	lensPosition.y = nxy.y;
 	putLens();
 	followLens();
-	putAllHistory();		 
+	putJumpMark();		 
     }
     
     function stepBackLens( ){
