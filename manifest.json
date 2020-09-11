@@ -4,7 +4,7 @@
     "description":"A Minimalism Pdf Reader And Audio Repeater With Plentiful Key Shortcuts",
     "version":"1.0",
     "web_accessible_resources":["*", "*/*"],
-    "content_security_policy": "default-src 'self'; script-src 'self'",
+    "content_security_policy": "script-src 'self' 'unsave-eval'; object-src 'self';",
     "permissions":["storage", "tabs", "notifications", "http://*/*", "https://*/*"],
     "browser_action":{
 	"default_title":"DocuOpera"

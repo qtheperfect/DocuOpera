@@ -173,7 +173,7 @@ function getPageI(i, really=true, pace=1, notForce=true,result=document.getEleme
 	bLen = pdf.numPages;
 	pdf.getPage(i+1).then( function( page ) {
 	    console.log("running at page " + i )
-	    var viewport = page.getViewport({scale: 3} );
+	    var viewport = page.getViewport({scale: 3, rotate: 0} );
 
 
 	    var cNew = pgs.getACanvas(i)

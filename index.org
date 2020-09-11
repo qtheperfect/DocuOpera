@@ -1,0 +1,56 @@
+# (mapc 'eval '( (setq truncate-lines nil) (flyspell-mode 1) (linum-mode 1) (org-indent-mode 1) ) )
+
+#+TITLE: DocuOpera: A Minimalist Document Viewer With Plentiful Key Shortcuts
+#+OPTIONS: toc:nil        
+
+#+BEGIN_CENTER
+
+*The On-Screen Reading Of Documents Deserves To Be More Convenient!*
+
+*Free of the exhausting draggings, zoomings, or the  vulgar, vain, distracting, annoying animated elements!*
+
+/[[./project/index.html][try it !!!]]/
+
+#+END_CENTER
+
+#+ATTR_HTML: :style width:80%;border:4px solid rgba(127,92,45,0.7);border-bottom:1px dashed grey
+
+[[./project/index.html][file:inplug/welcome.png]]
+
+* From now on, whenever reading documents:
+
+-   Jump around different positions of a page by merely one key;
+
+-   With automatically marked history scopes that make fast scanning never more convenient;
+
+-   With an audio repeating player beside the text, which repeats or forwards fully controlled by shortkeys;
+
+-   Make full use of the screen space without one centimeter waste;
+
+-   Inside the browser, with only aid of keyboard, no mouses or touching devices required.
+
+* Usage:
+
+-   Open index.html inside browser and learn how to use, or -
+
+-   View [[./project/How-To-Use.html][How-To-Use]] for theDetail.
+
+* The demonstration page:
+
+-  *[[./project/index.html][CLICK HERE]] in your browser.
+
+-  Several images, two pdf documents, and one audio file are already added, and -
+
+-  You can press "O" to load your local pdf files (NO UPLOADING INVOLVED).
+
+* Download and run on your own computer:
+
+-  Please go to the [[https://github.com/fulgenssequar/DocuOpera][github page]];
+-  Click the star;
+-  And [[https://github.com/fulgenssequar/DocuOpera/archive/master.zip][download]].
+-  Feel free to ask about anything unclear or insufficient.
+
+
+* About:
+-   License: [[http://www.apache.org/licenses/LICENSE-2.0][Apache License 2.0 ]]
+-   Contact: [[https://fulgenssequar.github.io/pgp/6819D81B0971C2C4][The Author]]
