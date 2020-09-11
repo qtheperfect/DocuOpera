@@ -33,7 +33,7 @@
 
 -   Open index.html inside browser and learn how to use, or -
 
--   View [[./project/How-To-Use.html][How-To-Use]] for theDetail.
+-   View [[./How-To-Use.html][How-To-Use]] for theDetail.
 
 * The demonstration page:
 
