@@ -2,14 +2,25 @@ document.oncontextmenu = function (event) {
     event.preventDefault();
 };
 
+var cookStr = "{}"
 var cookable={}
 var cookedRecords = document.cookie.split(";")
-
 
 var baseLoc = window.location.href.match("[^/]+//[^?]+")
 var seekto = window.location.href.match(/seekto=([^&].*)/)
 
 var pdfUrl = window.location.href.match(/pdf=([^&].*)/)
+
+function restoreCookStr(){
+    if (! (typeof chrome == "undefined" || typeof chrome.storage == "undefined")){
+	chrome.storage.local.get(['cookstr'], (s)=>{ cookStr= s.cookstr})
+    }
+    else {
+	cookedRecords = document.cookie.split(";")
+	if (cookedRecords[0].length > 10)
+	    cookStr = cookedRecords[0]
+    }
+}
 
 if (pdfUrl){
     pdfUrl=pdfUrl[1];
@@ -20,16 +31,8 @@ if (seekto) {
     cookable = JSON.parse(seekto)
     document.cookie = JSON.stringify(cookable)
 }
-else if (cookedRecords[0].length>0){
-    cookable = JSON.parse(cookedRecords[0])
-    var newLoc = seekableURI()
-    if (confirm("Follow cookie to " + newLoc + " ?")) {
-	window.location.href = newLoc
-    }
-    
-}
 else
-    document.cookie = JSON.stringify(cookable)
+    restoreCookStr()
 
 
 function seekableURI(){
@@ -125,6 +128,15 @@ var pubCanvas = document.createElement("canvas")
 
 function getPDF(pdfUrl = pdfUrl){
     picArray = new Array();
+    if (! pdfUrl.startsWith("data:")){
+	fetch(pdfUrl).then(res => res.blob()).then(blob => {
+	    var fr = new FileReader()
+	    fr.onload = () => {
+		pdfUrl = fr.result;
+	    }
+	    fr.readAsDataURL(blob);
+	})
+    }
     pdfTsk = pdfjsLib.getDocument(pdfUrl);
     pdfTsk.promise.then( function(pdf) {bLen = pdf.numPages; getPageI(bP)})
     pgs = getPageCache();
@@ -134,10 +146,15 @@ var fetchPDF = document.createElement('input');
 fetchPDF.type = 'file';
 fetchPDF.onchange = e => {
     ///    var reader = new FileReader();
-    pdfUrl = URL.createObjectURL(fetchPDF.files[0]);
-    getPDF( pdfUrl );
+    /// pdfUrl = URL.createObjectURL(fetchPDF.files[0]);
+    var fr = new FileReader()
+    fr.onload = () => {
+	pdfUrl = fr.result
+	getPDF(pdfUrl)
+	pageForward();
+    }
+    fr.readAsDataURL(fetchPDF.files[0])
     //bP=-1;
-    pageForward();
 }
 
 
@@ -578,6 +595,10 @@ function imageZoom(imgID, resultID) {
     keyDict[190] = cookOut
 
     function cookIn(){
+	if ( typeof chrome != "undefined" && typeof chrome.storage != "undefined" ) {
+	    cookInStorage();
+	    return;
+	}
 	noBlob = (s)=>!(s.startsWith("blob"))
 	if (pdfUrl && noBlob(pdfUrl))
 	    cookable.pdfUrl = pdfUrl
@@ -590,17 +611,21 @@ function imageZoom(imgID, resultID) {
 	document.cookie=JSON.stringify(cookable)
     }
 
-    function cookOut(){
-	cookedRecords = document.cookie.split(";")
-	var cookN = prompt(cookedRecords.join("\n"), 0)
-	if (! cookedRecords[cookN]){
-	    cookN = cookedRecords.findIndex(x=>x.search(cookN)>=0)
-	    if (cookN < 0)
-		return
-	}
+    function cookInStorage(){
+	if (pdfUrl)
+	    cookable.pdfUrl = pdfUrl
+	if (plany.player.src )
+	    cookable.cAudio = plany.player.src
+	if (betterLensList.length > 0)
+	    cookable.betterLensList = betterLensList
+	cookable.bP = bP
+	cookable.bLen = bLen
+	// document.cookie=JSON.stringify(cookable)
+	chrome.storage.local.set({"cookstr": JSON.stringify(cookable)}, ()=>console.log(" <-localdata set")) 
+    }
 
-	cookable = JSON.parse(cookedRecords[cookN])
-
+    function cookOut(  ){
+	cookable = JSON.parse(cookStr)
 	if (cookable.betterLensList){
 	    betterLensList = cookable.betterLensList
 	    gotoFirstLast(true)
