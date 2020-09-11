@@ -173,7 +173,7 @@ function getPageI(i, really=true, pace=1, notForce=true,result=document.getEleme
 	bLen = pdf.numPages;
 	pdf.getPage(i+1).then( function( page ) {
 	    console.log("running at page " + i )
-	    var viewport = page.getViewport( 3 );
+	    var viewport = page.getViewport({scale: 3} );
 
 
 	    var cNew = pgs.getACanvas(i)
@@ -192,7 +192,7 @@ function getPageI(i, really=true, pace=1, notForce=true,result=document.getEleme
 		result.appendChild(cNew)
 		
 		var c = cNew
-		newRender.then(()=>{
+		newRender.promise.then(()=>{
 		    c.cimg.src = c.toDataURL();
 		    result.style.backgroundImage = "url('" + c.cimg.src + "')"
 		    img.src = c.cimg.src
@@ -202,7 +202,7 @@ function getPageI(i, really=true, pace=1, notForce=true,result=document.getEleme
 	    }
 	    else {
 		var c = cNew
-		newRender.then(()=>{
+		newRender.promise.then(()=>{
 		    c.cimg.src = c.toDataURL()
 		})
 	    }
