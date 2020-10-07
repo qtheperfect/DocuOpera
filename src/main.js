@@ -26,9 +26,9 @@ if (pdfUrl){
     pdfUrl=pdfUrl[1];
     getPDF(pdfUrl);
 }
-if (seekto) {
-    seekto = decodeURI(seekto[1])
-    cookable = JSON.parse(seekto)
+else if (seekto) {
+    cookStr = decodeURI(seekto[1])
+    cookable = JSON.parse(cookStr)
     document.cookie = JSON.stringify(cookable)
 }
 else
@@ -624,8 +624,10 @@ function imageZoom(imgID, resultID) {
 	chrome.storage.local.set({"cookstr": JSON.stringify(cookable)}, ()=>console.log(" <-localdata set")) 
     }
 
+    document.body.onload = () => {if (cookStr.length > 5 && confirm("Open the book now or press '.' later?")) cookOut()}
     function cookOut(  ){
 	cookable = JSON.parse(cookStr)
+	console.log(cookable)
 	if (cookable.betterLensList){
 	    betterLensList = cookable.betterLensList
 	    gotoFirstLast(true)
@@ -643,7 +645,6 @@ function imageZoom(imgID, resultID) {
 	    bP = cookable.bP-1
 	    nextPage()
 	}
-	
     }
 
 
