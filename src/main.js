@@ -128,18 +128,14 @@ var pubCanvas = document.createElement("canvas")
 
 function getPDF(pdfUrl = pdfUrl){
     picArray = new Array();
-    if (! pdfUrl.startsWith("data:")){
+    if ( true || ! pdfUrl.startsWith("data:") ){
 	fetch(pdfUrl).then(res => res.blob()).then(blob => {
-	    var fr = new FileReader()
-	    fr.onload = () => {
-		pdfUrl = fr.result;
-	    }
-	    fr.readAsDataURL(blob);
+	    let pbu = URL.createObjectURL(blob)
+	    pdfTsk = pdfjsLib.getDocument(pbu);
+	    pdfTsk.promise.then( (pdf) => {bLen = pdf.numPages; getPageI(bP)})
+	    pgs = getPageCache();
 	})
     }
-    pdfTsk = pdfjsLib.getDocument(pdfUrl);
-    pdfTsk.promise.then( function(pdf) {bLen = pdf.numPages; getPageI(bP)})
-    pgs = getPageCache();
 }	     
 
 var fetchPDF = document.createElement('input');
@@ -542,16 +538,27 @@ function imageZoom(imgID, resultID) {
 	    pdfSheet = pdfSheet + i + " - " + pdfList[i] + "\n- ";
 	}
 	var n  = prompt(pdfSheet + "Input a num:", 0);
-	if (! pdfList[n]){
-	    n = pdfList.findIndex(x=>x.search(n)>=0)
-	    if (n<0)
-		return
+
+	if (pdfList[n]){
+		pdfUrl=pdfList[n]
 	}
-	var newTitle = pdfList[n].match(/[^\/]*$/)
+	else if (! n.startsWith("http") && ! n.startsWith("ftp")){
+	    n = pdfList.findIndex(x=>x.search(n)>=0)
+	    if (n<0){
+		console.log("Failed attempt matching the items...")
+		return
+	    }
+	    else 
+		pdfUrl=pdfList[n]
+	}
+	else {
+	    pdfUrl = n
+	    console.log("Manually input pdf url: " + n);
+	}
+	let newTitle = pdfUrl.match(/[^\/]*$/)
 	document.getElementById("title").innerHTML = "DocuOpera - "+newTitle;
-	pdfUrl=pdfList[n]
-	getPDF(pdfList[n]); 
-	cookable.pdfUrl=pdfList[n]
+	getPDF(pdfUrl); 
+	cookable.pdfUrl=pdfUrl;
 	nextPage();
     }
     
@@ -561,13 +568,24 @@ function imageZoom(imgID, resultID) {
 	    audioSheet = audioSheet + i + " - " + audioArray[i] + "\n- ";
 	}
 	var n  = prompt(audioSheet + "Input a num:", 0);
-	if (! audioArray[n]) {
+
+	var aurl = ""
+	if ( audioArray[n]) {
+	    aurl = audioArray[n];
+	}
+	else if (! n.startsWith("http") && ! n.startsWith("ftp")) {
 	    n = audioArray.findIndex(x=>x.search(n)>=0)
 	    if (n<0)
 		return
+	    else
+		aurl = audioArray[n]
 	}
-	plany.changeFile(audioArray[n])
-	cookable.cAudio=audioArray[n]
+	else {
+	    console.log("manually input audio url: " + n)
+	    aurl = n
+	}
+	plany.changeFile(aurl)
+	cookable.cAudio = aurl
 	cookIn()
     }
 
